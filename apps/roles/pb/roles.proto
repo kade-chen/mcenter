@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package gokade.mcenter.roles;
+
+option go_package = "gitee.com/go-kade/mcenter/apps/roles";
+
+// import "mcenter/apps/roles/pb/roles.proto";
+
+message Roles {
+  // roles _id
+  // @gotags: bson:"_id" json:"Name"
+  string Name = 1;
+  // roles title
+  // @gotags: json:"title"
+  string Title = 2;
+  // roles stage
+  // @gotags: json:"stage"
+  string Stage = 3;
+  // roles description
+  // @gotags: json:"description"
+  string Description = 4;
+  // roles included permissions
+  // @gotags: json:"included_permissions"
+  repeated string IncludedPermissions = 5;
+  // roles deleted
+  // @gotags: json:"deleted"
+  bool Deleted = 6;
+}
+
+message CreateRoleRequest {
+  // roles _id
+  // @gotags: bson:"_id" json:"Name"
+  string Name = 1;
+  // roles title
+  // @gotags: json:"title"
+  string Title = 2;
+  // roles stage
+  // @gotags: json:"stage"
+  string Stage = 3;
+  // roles description
+  // @gotags: json:"description"
+  string Description = 4;
+  // roles included permissions
+  // @gotags: json:"included_permissions"
+  repeated string IncludedPermissions = 5;
+  // roles deleted
+  // @gotags: json:"deleted"
+  bool Deleted = 6;
+}

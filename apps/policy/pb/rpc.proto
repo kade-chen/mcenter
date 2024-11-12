@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package gokade.mcenter.policy;
+
+option go_package = "gitee.com/go-kade/mcenter/apps/policy";
+
+import "mcenter/apps/user/pb/user.proto";
+
+service RPC {
+  // check permission
+  rpc Check_Permission(User_Permission_Request) returns (Permission_Message);
+}
+
+// var permission_message success = "permission success"
+message Permission_Message {
+  // string message = 1;
+  //@gotags: bson:"message" json:"message"
+  string message = 1;
+}
+
+message User_Permission_Request {
+  //@tags: bson:"user" json:"user"
+  repeated user.User user = 1;
+  //@tags: bson:"roles_admin" json:"roles_admin"
+  string Roles_Admin = 2;
+  //@tags: bson:"permission_name" json:"permission_name"
+  string Permission_Name = 3;
+}

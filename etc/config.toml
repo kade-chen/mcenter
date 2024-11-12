@@ -1,0 +1,54 @@
+[app]
+name = "mcenter"
+key  = "this is your app key"
+
+[http]
+host = "127.0.0.1"
+port = 8010
+
+[grpc]
+host = "127.0.0.1"
+port = 18010
+
+[mongodb]
+endpoints = ["127.0.0.1:55000"]
+username = "admin"
+password = "cys000522"
+database = "mcenter"
+
+[vertex]
+project_id = "kade-poc"
+service_account = "/Users/kade.chen/Downloads/kade-poc-0c88b6757f62.json"
+
+[SpeechToTextV1]
+service_account = "/Users/kade.chen/Downloads/kade-poc-0c88b6757f62.json"
+
+[TextToSpeechV1]
+service_account = "/Users/kade.chen/Downloads/kade-poc-0c88b6757f62.json"
+
+
+#[log]
+#  # 0 为打印日志全路径, 默认打印2层路径
+#  caller_deep = 3
+#  # 日志的级别, 默认Debug
+#  level = "debug"
+#  # 开启Trace时, 记录的TraceId名称, 默认trace_id
+#  trace_filed = "trace_id"
+#
+#[log.console]
+#  enable = true
+#  no_color = false
+#
+#[log.file]
+#  # 是否开启文件记录
+#  enable = true
+#  # 文件的路径
+#  file_path = "2.log"
+#  # 单位M, 默认100M
+#  max_size = 100
+#  # 默认保存 6个文件
+#  max_backups = 6
+#  # 保存多久
+#  max_age = 0
+#  # 是否压缩
+#  compress = false

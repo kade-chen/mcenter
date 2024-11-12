@@ -1,0 +1,18 @@
+{
+    "protoc": {
+        "path": "/usr/local/bin/protoc",
+        "compile_on_save": false,
+        "options": [
+            "--proto_path=protos/v3",
+            "--proto_path=${workspaceRoot}/proto",
+            "--proto_path=${env.GOPATH}/src",
+            "--go_out=gen/go"
+        ]
+    },
+    "clang-format.language.cpp.enable": true,
+    "clang-format.language.protobuf.enable": true,
+    "editor.formatOnSave": true,
+    "[proto]": {
+        "editor.defaultFormatter": "xaver.clang-format"
+    },
+}
