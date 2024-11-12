@@ -101,3 +101,7 @@ help: ## Display this help screen
 
 format: ## 格式化代码
 	@clang-format -i apps/*/*/pb/*.proto
+
+kade-library: ## 清理
+	@go build -o ~/go/bin/kade-library github.com/kade-chen/library/cmd
+	@sudo ln -s ~/go/bin/kade-library /usr/local/bin/kade-library
