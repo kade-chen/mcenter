@@ -1,7 +1,7 @@
 PROJECT_NAME := "mcenter"
 MAIN_FILE_PAHT := "main.go"
-PKG := "gitee.com/go-kade/mcenter"
-IMAGE_PREFIX := "gitee.com/go-kade/mcenter"
+PKG := "github.com/kade-chen/mcenter"
+IMAGE_PREFIX := "github.com/kade-chen/mcenter"
 
 MOD_DIR := $(shell go env GOPATH)/pkg/mod
 ##go list "gitee.com/go-kade/mcenter" | grep -v /vendor/ | grep -v redis
@@ -55,7 +55,7 @@ image: dep ## Build the docker image
 init: dep ## Inital project 
 	@go run main.go init
 
-run11: ## Run Server
+run: ## Run Server
 	@go run main.go start
 
 runp: dep ## Run product Server
@@ -75,14 +75,6 @@ pb: ## Copy mcube protobuf files to common/pb
 	@mkdir -pv common/pb/github.com/infraboard/mcube/v2/pb
 	@cp -r ${MCUBE_PKG_PATH}/pb/* common/pb/github.com/infraboard/mcube/v2/pb
 	@sudo rm -rf common/pb/github.com/infraboard/mcube/v2/pb/*/*.go
-
-gen-1: ## Init Service
-	@protoc -I=.. --go_out=. --go_opt=module=${PKG} --go-grpc_out=. --go-grpc_opt=module=${PKG} ../mcenter/apps/*/pb/*.proto
-	@go fmt ./...
-
-	@protoc-go-inject-tag -input=apps/*/*.pb.go
-	@mcube enum -p -m apps/*/*.pb.go
-
 
 gen: ## protobuf 编译
 	@protoc -I=.. --go_out=. --go_opt=module=${PKG} --go-grpc_out=. --go-grpc_opt=module=${PKG} ../mcenter/apps/*/pb/*.proto

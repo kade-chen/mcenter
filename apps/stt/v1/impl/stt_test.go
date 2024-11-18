@@ -2,6 +2,7 @@ package impl_test
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"cloud.google.com/go/speech/apiv1/speechpb"
@@ -32,7 +33,7 @@ func TestOptimizeSTTShort(t *testing.T) {
 			//Maximum number of recognition hypotheses to be returned. Specifically
 			//the maximum number of SpeechRecognitionAlternative messages within each SpeechRecognitionResult.
 			//The server may return fewer than max_alternatives. Valid values are 0-30. A value of 0 or 1 will return a maximum of one. If omitted, will return a maximum of one.
-			MaxAlternatives: 30,   //many results,0-30,defult 1,if 0 or 1 will return a maximum of one.
+			MaxAlternatives: 2,    //many results,0-30,defult 1,if 0 or 1 will return a maximum of one.
 			ProfanityFilter: true, //屏蔽脏话
 			//Speech adaptation configuration improves the accuracy of speech recognition
 			//这个功能暂时未研究，先注释掉
@@ -175,13 +176,14 @@ func TestOptimizeSTTLong(t *testing.T) {
 		},
 	}
 	a, err := impl.SpeechToTextLong(ctx, req)
+	fmt.Println(a)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Log(a)
 }
 
-//The method is not support
+// The method is not support
 func TestOptimizeSTTStreamingRecognize(t *testing.T) {
 	req := &speechpb.StreamingRecognizeRequest{
 		StreamingRequest: &speechpb.StreamingRecognizeRequest_StreamingConfig{
@@ -205,7 +207,7 @@ func TestOptimizeSTTStreamingRecognize(t *testing.T) {
 func init() {
 	req := ioc.NewLoadConfigRequest()
 	req.ConfigFile.Enabled = true
-	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/mcenter/etc/config.toml"
+	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/github/mcenter/etc/config.toml"
 	ioc.DevelopmentSetup(req)
 	impl = ioc.Controller().Get(stt.AppNameV1).(stt.Service)
 }

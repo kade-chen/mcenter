@@ -96,7 +96,6 @@ func Test_TextToSpeechV1_View(t *testing.T) {
 
 // ----------------TextToSpeechV1----------------
 
-
 // ----------------SpeechToTextV1----------------
 func Test_SpeechToTextV1_Admin(t *testing.T) {
 	req := roles.NewCreateRoleRequest()
@@ -131,10 +130,60 @@ func Test_SpeechToTextV1_View(t *testing.T) {
 
 // ----------------SpeechToTextV1----------------
 
+// ----------------vertex----------------
+func Test_Vertex_Admin(t *testing.T) {
+	req := roles.NewCreateRoleRequest()
+	req.Name = "Vertex Admin"
+	req.Title = "roles/Vertex.admin"
+	req.Description = "Vertex.admin.v1"
+	req.Deleted = false
+	req.IncludedPermissions = []string{
+		"Vertex.*",
+		"Vertex.list",
+		"Vertex.get",
+		"Vertex.create",
+		"Vertex.delete",
+	}
+	roles, err := impl.CreateRole(ctx, req)
+	t.Log(roles, err)
+}
+
+func Test_Vertex_View(t *testing.T) {
+	req := roles.NewCreateRoleRequest()
+	req.Name = "Vertex View"
+	req.Title = "roles/Vertex.view"
+	req.Description = "Vertex.view.v1"
+	req.Deleted = false
+	req.IncludedPermissions = []string{
+		"Vertex.get",
+		"Vertex.list",
+	}
+	roles, err := impl.CreateRole(ctx, req)
+	t.Log(roles, err)
+}
+
+// ----------------vertex----------------
+
+// ----------------owner----------------
+func Test_owner(t *testing.T) {
+	req := roles.NewCreateRoleRequest()
+	req.Name = "Owner"
+	req.Title = "roles/Owner"
+	req.Description = "Owner"
+	req.Deleted = false
+	req.IncludedPermissions = []string{
+		"*.*",
+	}
+	roles, err := impl.CreateRole(ctx, req)
+	t.Log(roles, err)
+}
+
+// ----------------owner----------------
+
 func init() {
 	req := ioc.NewLoadConfigRequest()
 	req.ConfigFile.Enabled = true
-	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/mcenter/etc/config.toml"
+	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/github/mcenter/etc/config.toml"
 	ioc.DevelopmentSetup(req)
 	impl = ioc.Controller().Get(roles.AppName).(roles.Service)
 }

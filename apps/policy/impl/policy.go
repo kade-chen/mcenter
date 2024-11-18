@@ -29,7 +29,7 @@ func (s *service) Check_Permission(ctx context.Context, req *policy.User_Permiss
 		//3.permission check
 		for _, v := range RoleUserBinding.RoleId {
 			// 3.1 if v is "User Admin",then pass
-			if v == req.Roles_Admin || v == "Editor" || v == "Owner" {
+			if v == req.Roles_Admin || v == "Owner" {
 				// 4.create user
 				s.log.Info().Msgf("The roles is %s for %s", v, username)
 				goto condition

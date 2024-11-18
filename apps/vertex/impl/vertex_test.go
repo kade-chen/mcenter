@@ -13,6 +13,7 @@ import (
 	"github.com/kade-chen/mcenter/apps/vertex"
 	_ "github.com/kade-chen/mcenter/apps/vertex/impl"
 	"google.golang.org/api/iterator"
+	// "google.golang.org/appengine/log"
 )
 
 var (
@@ -56,7 +57,7 @@ func TestStreamingGenerateContent(t *testing.T) {
 	// 	// genai.Blob{},
 	// }
 	req.ModelName = "gemini-1.5-pro-002"
-	prompt := genai.Text("k8s是什么?18个字解释")
+	prompt := genai.Text("k8s是什么?250个字解释")
 	// e := genai.FileData{
 	// 	MIMEType: "audio/wav",
 	// 	FileURI:  "gs://kadeccc/3.wav",
@@ -83,12 +84,12 @@ func TestStreamingGenerateContent(t *testing.T) {
 		// fmt.Fprint(os.Stdout, "generated response: ")
 		for _, c := range resp.Candidates {
 			for _, p := range c.Content.Parts {
-				fmt.Fprintf(os.Stdout, "%v", p)
+				// fmt.Fprintf(os.Stdout, "%v", p)
 				// fmt.Fprint(os.Stdout, p)
-				// fmt.Print(p)
+				fmt.Print(p)
 			}
 		}
-		fmt.Fprint(os.Stdout, "\n")
+		// fmt.Fprint(os.Stdout, "\n")
 	}
 	// t.Log(a)
 }
@@ -133,7 +134,7 @@ func TestStreamingGenerateContent2(t *testing.T) {
 func init() {
 	req := ioc.NewLoadConfigRequest()
 	req.ConfigFile.Enabled = true
-	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/mcenter/etc/config.toml"
+	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/github/mcenter/etc/config.toml"
 	ioc.DevelopmentSetup(req)
 	impl = ioc.Controller().Get(vertex.AppName).(vertex.Service)
 }

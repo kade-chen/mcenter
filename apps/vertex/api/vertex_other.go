@@ -27,19 +27,35 @@ var mimeType = map[string]string{
 	// ".zip": "application/x-zip-compressed",
 }
 
-func (g *geminiHandler) getFileDataUrl(url string) genai.FileData {
-	//0.get file extension form url and convert to lower case
-	extension := strings.ToLower(path.Ext(url))
+// get filedata from url
+func (g *geminiHandler) getFileDataUrl(url string) (parts []genai.Part) {
+	// A := make([]genai.Part, 50)
+	// 使用 strings.Split 将长字符串按逗号分割成多个部分
+	urlSlice := strings.Split(url, ",")
 
-	if mimieType, exists := mimeType[extension]; exists {
-		g.log.Info().Msgf("File extension: %s, MIME type: %s", extension, mimieType)
-		return genai.FileData{MIMEType: mimieType, FileURI: url}
-	}
+	// 输出分割后的所有 URL
+	for _, url := range urlSlice {
+		//0.get file extension form url and convert to lower case
+		extension := strings.ToLower(path.Ext(url))
 
-	// 默认返回 application/octet-stream MIME 类型
-	g.log.Info().Msgf("By default, the application/octet-stream mime type is returned")
-	return genai.FileData{
-		MIMEType: "application/octet-stream",
-		FileURI:  url,
+		if mimieType, exists := mimeType[extension]; exists {
+			g.log.Info().Msgf("File extension: %s, MIME type: %s", extension, mimieType)
+			parts = append(parts, genai.FileData{MIMEType: mimieType, FileURI: url})
+			// return genai.FileData{MIMEType: mimieType, FileURI: url}
+		} else {
+			// 默认返回 application/octet-stream MIME 类型
+			g.log.Error().Msgf("By default, the application/octet-stream mime type is returned")
+			parts = append(parts, genai.FileData{
+				MIMEType: "application/octet-stream",
+				FileURI:  url,
+			})
+		}
 	}
+	return parts
 }
+
+// t1 := mimetype.Detect(video).String()
+// blob := genai.Blob{
+// 	MIMEType: t1,
+// 	Data:     decoded,
+// }

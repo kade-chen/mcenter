@@ -10,8 +10,8 @@ import (
 	logs "github.com/kade-chen/library/ioc/config/log"
 	"github.com/kade-chen/mcenter/apps/token"
 
-	"github.com/kade-chen/mcenter/apps/user"
 	"github.com/emicklei/go-restful/v3"
+	"github.com/kade-chen/mcenter/apps/user"
 	"github.com/rs/zerolog"
 )
 
@@ -34,11 +34,19 @@ func NewTokenAuther() *TokenAuth {
 }
 
 func (t *TokenAuth) Auth_Login(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
+	// defer func() {
+	// 	if err := recover(); err != nil {
+	// 		t.log.Error().Msgf("Internal Server Error; error: %v", err)
+	// 		response.Failed(resp, exception.NewInternalServerError("Internal Server Error; error: %v", err))
+	// 		return
+	// 	}
+	// }()
+
 	//	1.get cookis
 	http_cookis := req.Request.Cookies()
 	if len(http_cookis) == 0 {
 		t.log.Info().Msg("No cookies found")
-		Redirect_Url(resp, exception.NewAccessTokenIllegal("No cookies found"))
+		Redirect_Url(resp, exception.NewAccessTokenIllegal("No cookies found"), t.log)
 		return
 	}
 	var cookie_name, cookie_value string
@@ -60,7 +68,7 @@ func (t *TokenAuth) Auth_Login(req *restful.Request, resp *restful.Response, cha
 	if err != nil {
 		// 处理 token 验证错误
 		t.log.Error().Msgf("The %s is expired or not found", cookie_value)
-		Redirect_Url(resp, err)
+		Redirect_Url(resp, err, t.log)
 		return
 	}
 	// 4.query wether the user exist
@@ -71,14 +79,14 @@ func (t *TokenAuth) Auth_Login(req *restful.Request, resp *restful.Response, cha
 	if err != nil {
 		t.log.Error().Msgf("The %s not found", tk.Username)
 		// 处理 user 验证错误
-		Redirect_Url(resp, err)
+		Redirect_Url(resp, err, t.log)
 		return
 	}
 	// 5.wether the user's domain is exist
 	if tk.Domain != user.Spec.Domain {
 		t.log.Error().Msgf("The %s not found", tk.Domain)
 		// 处理 token 验证错误
-		Redirect_Url(resp, exception.NewAccessTokenIllegal("the domain not find for user"))
+		Redirect_Url(resp, exception.NewAccessTokenIllegal("the domain not find for user"), t.log)
 		return
 	}
 	// 6.verity whether the issue_token is expired
@@ -86,7 +94,7 @@ func (t *TokenAuth) Auth_Login(req *restful.Request, resp *restful.Response, cha
 	if err != nil {
 		t.log.Error().Msg("The issue_token is expired")
 		// 处理 token 验证错误
-		Redirect_Url(resp, err)
+		Redirect_Url(resp, err, t.log)
 		return
 	}
 	t.log.Info().Msgf("the token is valid, expried_access_token_time: %v , expried_time: %v Second", expried_access_token_time, -expried_time)
@@ -99,10 +107,11 @@ func (t *TokenAuth) Auth_Login(req *restful.Request, resp *restful.Response, cha
 	chain.ProcessFilter(req, resp)
 }
 
-func Redirect_Url(resp *restful.Response, err error) {
+func Redirect_Url(resp *restful.Response, err error, t *zerolog.Logger) {
 	redirectURL := "http://localhost:5173/login?error=" + err.Error()
 	resp.AddHeader("Location", redirectURL)
 	resp.WriteHeader(http.StatusFound) // 302
+	t.Error().Msg("302 to login page")
 }
 
 func NewCheckIssue_Token(tk *token.Token) (time.Time, float64, error) {
