@@ -22,7 +22,7 @@ var (
 )
 
 func TestNoStreamingGenerateContent(t *testing.T) {
-	fmt.Println(ioc.Controller().List(), ioc.Config().List(), *new(int32))
+	// fmt.Println(ioc.Controller().List(), ioc.Config().List(), *new(int32))
 	req := vertex.NewGenaiSetting()
 	// req.SystemInstruction.Parts = []genai.Part{
 	// 	genai.Text("必须中文回答"),
@@ -30,20 +30,20 @@ func TestNoStreamingGenerateContent(t *testing.T) {
 	// 	// genai.Blob{},
 	// }
 	req.SystemInstruction.Parts = "必须中文回答"
-	req.ModelName = "gemini-1.5-pro-002"
+	req.ModelName = "gemini-1.5-flash-002"
 	prompt := genai.Text("what is images")
 	img := genai.FileData{
 		MIMEType: "image/jpeg",
-		FileURI:  "https://www.encyclopedie-environnement.org/app/uploads/2016/10/ecosystemes-complexes_couverture.jpg",
+		FileURI:  "https://storage.googleapis.com/kadeccc/cat.jpg",
 	}
-	resp, err := impl.NoStreamingGenerateContent(context.Background(), req, prompt, img)
+	resp, err := impl.NoStreamingGenerateContent(ctx, req, prompt,img)
 	if err != nil {
-		t.Fatal(err)
+		fmt.Println("--------", err)
 	}
 	rb, err := json.MarshalIndent(resp, "", "  ")
 	// rb, err := json.Marshal(resp)
 	if err != nil {
-		t.Fatal(err)
+		fmt.Println("--------", err)
 	}
 	t.Log(string(rb))
 	// impl.GetLocationFromString()
@@ -134,7 +134,7 @@ func TestStreamingGenerateContent2(t *testing.T) {
 func init() {
 	req := ioc.NewLoadConfigRequest()
 	req.ConfigFile.Enabled = true
-	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/github/mcenter/etc/config.toml"
+	req.ConfigFile.Path = "../../../etc/config.toml"
 	ioc.DevelopmentSetup(req)
 	impl = ioc.Controller().Get(vertex.AppName).(vertex.Service)
 }

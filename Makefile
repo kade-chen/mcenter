@@ -97,3 +97,6 @@ format: ## 格式化代码
 kade-library: ## 清理
 	@go build -o ~/go/bin/kade-library github.com/kade-chen/library/cmd
 	@sudo ln -s ~/go/bin/kade-library /usr/local/bin/kade-library
+
+docker-build: ## 构建镜像
+	@docker buildx build -t mcenter . 

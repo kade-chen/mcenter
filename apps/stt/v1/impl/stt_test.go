@@ -207,7 +207,7 @@ func TestOptimizeSTTStreamingRecognize(t *testing.T) {
 func init() {
 	req := ioc.NewLoadConfigRequest()
 	req.ConfigFile.Enabled = true
-	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/github/mcenter/etc/config.toml"
+	req.ConfigFile.Path = "../../../../etc/config.toml"
 	ioc.DevelopmentSetup(req)
 	impl = ioc.Controller().Get(stt.AppNameV1).(stt.Service)
 }

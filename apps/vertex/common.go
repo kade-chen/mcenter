@@ -70,8 +70,8 @@ func NewGenaiSetting() *GenaiSetting {
 		// https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/inference#safetysetting
 		SafetySetting: []*genai.SafetySetting{
 			{
-				// Category:  genai.HARM_CATEGORY_CIVICINTEGRITY,
-				// Threshold: genai.HarmBlockOFF,
+				Category:  5,
+				Threshold: 5,
 				// Method:    genai.HarmBlockMethodProbability,
 			},
 		},
