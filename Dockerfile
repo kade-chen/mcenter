@@ -3,20 +3,21 @@ FROM golang:1.22-alpine
 
 # 设置工作目录
 WORKDIR /app
-COPY . .
+# COPY . .
 # COPY go.mod go.sum ./
 
 # 复制项目文件到容器
 COPY etc/config.toml etc/config.toml
 # 将本地源码复制到 Docker 镜像中
-COPY vertexai@v0.13.1/genai /go/pkg/mod/cloud.google.com/go/vertexai/genai
+# COPY vertexai@v0.13.1/genai /go/pkg/mod/cloud.google.com/go/vertexai/genai
 
 # RUN go mod download
 # 复制其他项目文件到容器
 # COPY . .
 
 # 编译 Go 程序
-RUN go build -o main .
+# RUN go build -o main .
+COPY main main
 
 # 暴露端口
 EXPOSE 8010

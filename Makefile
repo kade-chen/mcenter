@@ -99,4 +99,5 @@ kade-library: ## 清理
 	@sudo ln -s ~/go/bin/kade-library /usr/local/bin/kade-library
 
 docker-build: ## 构建镜像
-	@docker buildx build -t mcenter . 
+	@GOOS="linux" go build -o main .
+	@DOCKER_BUILDKIT=1 docker buildx build -t mcenter .
