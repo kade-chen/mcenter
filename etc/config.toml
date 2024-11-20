@@ -3,28 +3,30 @@ name = "mcenter"
 key  = "this is your app key"
 
 [http]
-host = "127.0.0.1"
+host = "localhost"
 port = 8010
 
 [grpc]
-host = "127.0.0.1"
+host = "localhost"
 port = 18010
 
 [mongodb]
-endpoints = ["127.0.0.1:55000"]
+endpoints = ["localhost:55000"]
 username = "admin"
 password = "cys000522"
 database = "mcenter"
+enable_mongo = false
+mongo_url = "mongodb+srv://admin:cys000522@mongo.xtqfj.mongodb.net/?retryWrites=true&w=majority&appName=mongo"
 
 [vertex]
 project_id = "kade-poc"
-service_account = "/Users/kade.chen/Downloads/kade-poc-0c88b6757f62.json"
+service_account = "/opt/serviceaccount/kade-poc.json"
 
 [SpeechToTextV1]
-service_account = "/Users/kade.chen/Downloads/kade-poc-0c88b6757f62.json"
+service_account = "/opt/serviceaccount/kade-poc.json"
 
 [TextToSpeechV1]
-service_account = "/Users/kade.chen/Downloads/kade-poc-0c88b6757f62.json"
+service_account = "/opt/serviceaccount/kade-poc.json"
 
 
 #[log]

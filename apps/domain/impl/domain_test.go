@@ -37,7 +37,7 @@ func TestDescribeDomain(t *testing.T) {
 func init() {
 	req := ioc.NewLoadConfigRequest()
 	req.ConfigFile.Enabled = true
-	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/mcenter/etc/config.toml"
+	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/github/mcenter/etc/config.toml"
 	ioc.DevelopmentSetup(req)
 	impl = ioc.Controller().Get(domain.AppName).(domain.Service)
 }

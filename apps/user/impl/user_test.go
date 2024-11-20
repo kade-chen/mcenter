@@ -17,7 +17,7 @@ var (
 // create user
 func TestCreateUser(t *testing.T) {
 	u, err := impl.CreateUser(ctx, &user.CreateUserRequest{
-		Username: "kade1",
+		Username: "admin",
 		Password: "123456",
 		Domain:   "kade-domain",
 		Type:     user.TYPE_SUB,
@@ -56,7 +56,7 @@ func TestDeleteUser(t *testing.T) {
 func init() {
 	req := ioc.NewLoadConfigRequest()
 	req.ConfigFile.Enabled = true
-	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/mcenter/etc/config.toml"
+	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/github/mcenter/etc/config.toml"
 	ioc.DevelopmentSetup(req)
 	impl = ioc.Controller().Get(user.AppName).(user.Service)
 }
