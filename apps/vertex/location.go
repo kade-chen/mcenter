@@ -125,19 +125,19 @@ var VertexLocationToString = map[LOCATION]string{
 
 	// Asia Pacific
 	//Tokyo, Japan 	日本-东京
-	LOCATION_AsiaPacific_Northeast1: "asia-pacific-northeast1",
+	LOCATION_AsiaPacific_Northeast1: "asia-northeast1",
 	//Sydney, Australia 澳大利亚-悉尼
 	LOCATION_AsiaPacific_Australia_Southeast1: "australia-southeast1",
 	//Singapore 新加坡
-	LOCATION_AsiaPacific_Southeast1: "asia-pacific-southeast1",
+	LOCATION_AsiaPacific_Southeast1: "asia-southeast1",
 	//Seoul, Korea 韩国-首尔
-	LOCATION_AsiaPacific_Northeast3: "asia-pacific-northeast3",
+	LOCATION_AsiaPacific_Northeast3: "asia-northeast3",
 	//Taiwan 台湾
-	LOCATION_AsiaPacific_East1: "asia-pacific-east1",
+	LOCATION_AsiaPacific_East1: "asia-east1",
 	//Hong Kong, China 中国-香港
-	LOCATION_AsiaPacific_East2: "asia-pacific-east2",
+	LOCATION_AsiaPacific_East2: "asia-east2",
 	//Mumbai, India 印度-孟买
-	LOCATION_AsiaPacific_South1: "asia-pacific-south1",
+	LOCATION_AsiaPacific_South1: "asia-south1",
 
 	// Middle East
 	//Dammam, Saudi Arabia 沙特阿拉伯-达曼
@@ -197,19 +197,19 @@ var VertexStringToLocation = map[string]LOCATION{
 
 	// Asia Pacific
 	//Tokyo, Japan 	日本-东京
-	"asia-pacific-northeast1": LOCATION_AsiaPacific_Northeast1,
+	"asia-northeast1": LOCATION_AsiaPacific_Northeast1,
 	//Sydney, Australia 澳大利亚-悉尼
 	"australia-southeast1": LOCATION_AsiaPacific_Australia_Southeast1,
 	//Singapore 新加坡
-	"asia-pacific-southeast1": LOCATION_AsiaPacific_Southeast1,
+	"asia-southeast1": LOCATION_AsiaPacific_Southeast1,
 	//Seoul, Korea 韩国-首尔
-	"asia-pacific-northeast3": LOCATION_AsiaPacific_Northeast3,
+	"asia-northeast3": LOCATION_AsiaPacific_Northeast3,
 	//Taiwan 台湾
-	"asia-pacific-east1": LOCATION_AsiaPacific_East1,
+	"asia-east1": LOCATION_AsiaPacific_East1,
 	//Hong Kong, China 中国-香港
-	"asia-pacific-east2": LOCATION_AsiaPacific_East2,
+	"asia-east2": LOCATION_AsiaPacific_East2,
 	//Mumbai, India 印度-孟买
-	"asia-pacific-south1": LOCATION_AsiaPacific_South1,
+	"asia-south1": LOCATION_AsiaPacific_South1,
 
 	// Middle East
 	//Dammam, Saudi Arabia 沙特阿拉伯-达曼

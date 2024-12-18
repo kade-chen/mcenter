@@ -4,11 +4,13 @@ import (
 	"context"
 
 	"cloud.google.com/go/speech/apiv1/speechpb"
+	speech "cloud.google.com/go/speech/apiv2/speechpb"
 )
 
 const (
 	AppNameV1     = "SpeechToTextV1"
 	AppNameV1beta = "SpeechToTextV1beta"
+	AppNameV2     = "SpeechToTextV2"
 )
 
 type Service interface {
@@ -26,4 +28,12 @@ type Service interface {
 	SpeechToTextStreamingRecognize(context.Context, *speechpb.StreamingRecognizeRequest) (speechpb.Speech_StreamingRecognizeClient, error)
 
 	LocalSpeechToTextStreamingRecognize(ctx context.Context, req *speechpb.StreamingRecognizeRequest) (string, error)
+}
+
+type ServiceV2 interface {
+	ListLocations(ctx context.Context)
+	GetModel(context.Context, ENDPOINT)
+	ListRecognizers(context.Context, ENDPOINT) error
+	CreateRecognizer(context.Context, ENDPOINT)
+	StreamingRecognize(context.Context, ENDPOINT) (speech.Speech_StreamingRecognizeClient, error)
 }

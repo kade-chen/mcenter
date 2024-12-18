@@ -8,6 +8,7 @@ WORKDIR /app
 
 # 复制项目文件到容器
 COPY etc/config.toml etc/config.toml
+COPY etc/kade-poc.json /Users/kade.chen/go-kade-project/github/mcenter/etc/kade-poc.json
 # 将本地源码复制到 Docker 镜像中
 # COPY vertexai@v0.13.1/genai /go/pkg/mod/cloud.google.com/go/vertexai/genai
 

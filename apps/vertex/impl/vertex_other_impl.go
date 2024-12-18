@@ -14,7 +14,7 @@ func NewGeminiGenerationConfig(geminiSetting *vertex.GenaiSetting) genai.Generat
 		// TopK: &geminiSetting.GenerationConfig.TopK,
 		CandidateCount:   &geminiSetting.GenerationConfig.CandidateCount,
 		MaxOutputTokens:  &geminiSetting.GenerationConfig.MaxOutputTokens,
-		StopSequences:    geminiSetting.GenerationConfig.StopSequences,
+		// StopSequences:    geminiSetting.GenerationConfig.StopSequences,
 		PresencePenalty:  &geminiSetting.GenerationConfig.PresencePenalty,
 		FrequencyPenalty: &geminiSetting.GenerationConfig.FrequencyPenalty,
 		ResponseMIMEType: geminiSetting.GenerationConfig.ResponseMIMEType,
@@ -22,6 +22,9 @@ func NewGeminiGenerationConfig(geminiSetting *vertex.GenaiSetting) genai.Generat
 	}
 	if geminiSetting.GenerationConfig.ResponseSchema != nil {
 		Config.ResponseSchema = geminiSetting.GenerationConfig.ResponseSchema
+	}
+	if geminiSetting.GenerationConfig.StopSequences != nil {
+		Config.StopSequences = geminiSetting.GenerationConfig.StopSequences
 	}
 	return Config
 }

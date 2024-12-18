@@ -26,6 +26,7 @@ type gemini struct {
 	ServiceAccount string `toml:"service_account" json:"service_account" yaml:"service_account" env:"service_account"`
 	log            *zerolog.Logger
 	clients        map[vertex.LOCATION]*genai.Client
+	clientsv2      *genai.Client
 }
 
 func (g *gemini) Name() string {
@@ -39,8 +40,9 @@ func (g *gemini) Init() error {
 	// t.log.Info().Msg("speech to text v1 client initializing...")
 
 	// t.log.Info().Msg("speech to text v1 client successfully initlialized")
-
-	for i := 0; i < 2; i++ {
+	client, _ := genai.NewClient(context.Background(), g.ProjectID, "global", option.WithCredentialsFile(g.ServiceAccount))
+	g.clientsv2 = client
+	for i := 24; i < 26; i++ {
 		// for i := 0; i < len(VertexLocationToString); i++ {
 		client, err := genai.NewClient(context.Background(), g.ProjectID, vertex.GetLocationString(vertex.LOCATION(i)), option.WithCredentialsFile(g.ServiceAccount))
 		if err != nil {
@@ -50,6 +52,5 @@ func (g *gemini) Init() error {
 		g.clients[(vertex.LOCATION(i))] = client
 		g.log.Info().Msgf("genai client for region: %s successfully initlialized", vertex.GetLocationString(vertex.LOCATION(i)))
 	}
-
 	return nil
 }

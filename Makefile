@@ -3,6 +3,10 @@ MAIN_FILE_PAHT := "main.go"
 PKG := "github.com/kade-chen/mcenter"
 IMAGE_PREFIX := "github.com/kade-chen/mcenter"
 
+DOCKER_IMAGE_PREFIX := "mcenter"
+DOCKER_IMAGE_TAG := "latest"
+DOCKER_BUILD_IMAGE_NAME := $(DOCKER_IMAGE_PREFIX):$(DOCKER_IMAGE_TAG)
+
 MOD_DIR := $(shell go env GOPATH)/pkg/mod
 ##go list "gitee.com/go-kade/mcenter" | grep -v /vendor/ | grep -v redis
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/ | grep -v redis)
@@ -100,4 +104,4 @@ kade-library: ## 清理
 
 docker-build: ## 构建镜像
 	@GOOS="linux" go build -o main .
-	@DOCKER_BUILDKIT=1 docker buildx build -t mcenter .
+	@DOCKER_BUILDKIT=1 docker buildx build -t ${DOCKER_BUILD_IMAGE_NAME} .

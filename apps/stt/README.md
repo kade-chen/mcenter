@@ -1,8 +1,8 @@
 # 文档明细
 
-**NOTE:** Speech To Text V1/V2
+**NOTE:** Speech To Text V1
 
-1.[Speech To Text V1 Go Client Interfaces](https://cloud.google.com/go/docs/reference/cloud.google.com/go/speech/latest/apiv1) 
+1.[Speech To Text V1 Go Client Interfaces](https://cloud.google.com/go/docs/reference/cloud.google.com/go/speech/latest/apiv1)
 
 2.[Speech-to-Text supported languages](https://cloud.google.com/speech-to-text/docs/speech-to-text-supported-languages)
 
@@ -42,7 +42,28 @@
 
 20.[sla](https://cloud.google.com/speech/sla?hl=en)
 
-21.[ASR语音模型响应指标压力测试报告](https://docs.google.com/document/d/12MujZnydR9QYBhZXRT7OZZnnwomhnywQGwv4qRyYVzI/edit?tab=t.flgjvcdcrtm9#heading=h.wv1941qd7cy6)
+21.[ASR 语音模型响应指标压力测试报告](https://docs.google.com/document/d/12MujZnydR9QYBhZXRT7OZZnnwomhnywQGwv4qRyYVzI/edit?tab=t.flgjvcdcrtm9#heading=h.wv1941qd7cy6)
+
+**NOTE:** Speech To Text V2
+
+1.[Speech To Text V2 Go Client Interfaces](https://cloud.google.com/go/docs/reference/cloud.google.com/go/speech/latest/apiv2)
+
+2.[Speech-to-Text V2 supported languages](https://cloud.google.com/speech-to-text/v2/docs/speech-to-text-supported-languages)
+
+3.[Package google.cloud.speech.v2, requests Parametars explain](https://cloud.google.com/speech-to-text/v2/docs/reference/rpc/google.cloud.speech.v2)
+
+4.[Supported class tokens explain](https://cloud.google.com/speech-to-text/v2/docs/class-tokens)
+
+5.[Supported spoken punctuation explain](https://cloud.google.com/speech-to-text/v2/docs/spoken-punctuation)
+
+6.[Supported spoken emoji explain](https://cloud.google.com/speech-to-text/v2/docs/spoken-emoji)
+
+7.[Supported transcription models](https://cloud.google.com/speech-to-text/v2/docs/transcription-model#transcription_models)
+
+
+
+7.[EndPoints](https://cloud.google.com/speech-to-text/v2/docs/reference/rest#service-endpoint)
+
 
 ```go
 设置为表示自然语言

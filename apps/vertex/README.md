@@ -38,6 +38,14 @@
 
 18.[SLA](https://cloud.google.com/vertex-ai/sla?hl=en)
 
+19.[Vertex AI video-requirements](https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/video-understanding#video-requirements) Gemini multimodal models support the following video MIME types
+
+20.[Vertex AI audio-requirements](https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/audio-understanding#audio-requirements) Gemini multimodal models support the following audio MIME types
+
+21.[Vertex AI document-requirements](https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/document-understanding#document-requirements) Gemini multimodal models support the following document MIME types
+
+22.[Vertex AI image-requirements](https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/image-understanding#image-requirements) Gemini multimodal models support the following image MIME types
+
 ```go
 Vertex AI服务 及 Google Cloud 提供相关数据安全与隐私保护说明和证明。
 参考：

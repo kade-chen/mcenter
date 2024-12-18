@@ -6,6 +6,7 @@ import (
 	_ "github.com/kade-chen/mcenter/apps/policy/impl"
 	_ "github.com/kade-chen/mcenter/apps/roles/impl"
 	_ "github.com/kade-chen/mcenter/apps/stt/v1/impl"
+	_ "github.com/kade-chen/mcenter/apps/stt/v2/impl"
 	_ "github.com/kade-chen/mcenter/apps/token/impl"
 	_ "github.com/kade-chen/mcenter/apps/tts/v1/impl"
 	_ "github.com/kade-chen/mcenter/apps/user/impl"
@@ -14,6 +15,7 @@ import (
 	//api
 	_ "github.com/kade-chen/mcenter/apps/policy/api"
 	_ "github.com/kade-chen/mcenter/apps/stt/v1/api"
+	_ "github.com/kade-chen/mcenter/apps/stt/v2/api"
 	_ "github.com/kade-chen/mcenter/apps/token/api"
 	_ "github.com/kade-chen/mcenter/apps/tts/v1/api"
 	_ "github.com/kade-chen/mcenter/apps/user/api"

@@ -67,11 +67,12 @@ type Content struct {
 // Return a new NewGenaiSetting
 func NewGenaiSetting() *GenaiSetting {
 	return &GenaiSetting{
+		Regional: 24,
 		// https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/inference#safetysetting
 		SafetySetting: []*genai.SafetySetting{
 			{
-				Category:  5,
-				Threshold: 5,
+				// Category:  5,
+				// Threshold: 5,
 				// Method:    genai.HarmBlockMethodProbability,
 			},
 		},
@@ -110,7 +111,7 @@ func NewGenaiSetting() *GenaiSetting {
 			//MaxOutputTokens [1,8193) ，The default is 0.
 			MaxOutputTokens: 8192,
 			//Stop Sequences ，[1,17)，The default is [""].
-			StopSequences: []string{"ll"},
+			// StopSequences: []string{"阴道"},
 			//可选参数，指的是存在惩罚。 在大型语言模型（LLM）的生成过程中，它控制模型对已生成文本中出现过的词语或概念的重复使用进行惩罚。 数值越高，模型越倾向于避免重复使用已出现的词语或概念，从而鼓励生成更具多样性和创造性的文本。 反之，数值越低或为负值，模型越倾向于重复使用已出现的词语或概念。
 			// PresencePenalty [-2，2), The default is 0.
 			// 这个参数惩罚模型生成在文本中已经出现过的词语。值越高，模型越倾向于避免使用已经出现过的词语，从而鼓励生成更广泛、更具多样性的文本。值越低，模型越有可能重复使用相同的词语。
@@ -119,6 +120,7 @@ func NewGenaiSetting() *GenaiSetting {
 			// 这个参数惩罚模型生成在文本中出现频率高的词语。值越高，模型越倾向于避免使用出现频率高的词语，即使这些词语之前已经出现过。这有助于减少重复，并鼓励模型使用更广泛的词汇。值越低，模型越有可能重复使用高频词语。
 			FrequencyPenalty: 1.9,
 			// ResponseMIMEType: "application/json",
+			// ResponseMIMEType: "text/html",
 			// ResponseSchema: &genai.Schema{
 			// 	Type: genai.TypeArray,
 			// 	Items: &genai.Schema{
@@ -131,6 +133,7 @@ func NewGenaiSetting() *GenaiSetting {
 			// 		Required: []string{"图片"},
 			// 	},
 			// },
+			// ResponseSchema: &genai.Schema{},
 		},
 	}
 }
