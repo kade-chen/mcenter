@@ -8,7 +8,7 @@ DOCKER_IMAGE_TAG := "latest"
 DOCKER_BUILD_IMAGE_NAME := $(DOCKER_IMAGE_PREFIX):$(DOCKER_IMAGE_TAG)
 
 MOD_DIR := $(shell go env GOPATH)/pkg/mod
-##go list "gitee.com/go-kade/mcenter" | grep -v /vendor/ | grep -v redis
+##go list "github.com/kade-chen/mcenter" | grep -v /vendor/ | grep -v redis
 PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/ | grep -v redis)
 GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
 
@@ -92,6 +92,11 @@ gen-tts: ## protobuf 编译
 	@protoc-go-inject-tag -input=apps/*/*/*.pb.go
 	@kade-library enum -p -m apps/*/*/*.pb.go
 
+gen-stt: ## protobuf 编译
+	@protoc -I=.. --go_out=. --go_opt=module=${PKG} --go-grpc_out=. --go-grpc_opt=module=${PKG} ../mcenter/apps/*/example/*/pb/*.proto
+	@go fmt ./...
+	@protoc-go-inject-tag -input=apps/*/example/*/pb/*.pb.go
+
 help: ## Display this help screen
 	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
@@ -105,3 +110,11 @@ kade-library: ## 清理
 docker-build: ## 构建镜像
 	@GOOS="linux" go build -o main .
 	@DOCKER_BUILDKIT=1 docker buildx build -t ${DOCKER_BUILD_IMAGE_NAME} .
+
+stt-grpc-server: ## 启动stt grpc server
+	@go run /Users/kade.chen/go-kade-project/github/mcenter/apps/stt/example/sttv2/grpc/server/main.go
+
+stt-grpc-client: ## 启动stt grpc client
+	@go run /Users/kade.chen/go-kade-project/github/mcenter/apps/stt/example/sttv2/grpc/client/main.go
+
+

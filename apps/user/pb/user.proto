@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package gokade.mcenter.user;
 
-option go_package = "gitee.com/go-kade/mcenter/apps/user";
+option go_package = "github.com/kade-chen/mcenter/apps/user";
 
 import "mcenter/apps/user/pb/meta.proto";
 

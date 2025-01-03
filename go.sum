@@ -19,6 +19,8 @@ cloud.google.com/go/texttospeech v1.8.1 h1:LpX9xKoGObltmT6+RGxqUeSJIq0uqPzo+fcbb
 cloud.google.com/go/texttospeech v1.8.1/go.mod h1:WoTykB+4mfSDDYPuk7smrdXNRGoJJS6dXRR6l4XqD9g=
 cloud.google.com/go/vertexai v0.13.1 h1:E6I+eA6vNQxz7/rb0wdILdKg4hFmMNWZLp+dSy9DnEo=
 cloud.google.com/go/vertexai v0.13.1/go.mod h1:25DzKFzP9JByYxcNjJefu/px2dRjcRpCDSdULYL2avI=
+gitee.com/go-kade/library/v2 v2.1.3 h1:e8xhNAlpD7XB+PuqCG95RWK3XgBzjdqkIc22nP6+yvw=
+gitee.com/go-kade/library/v2 v2.1.3/go.mod h1:VDexNOyKBXZSH5g8cuwMLCUpnLkpa/GOaXYIjI25sk4=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/toml v1.4.0 h1:kuoIxZQy2WRRk1pttg9asf+WVv6tWQuBNVmK8+nqPr0=
 github.com/BurntSushi/toml v1.4.0/go.mod h1:ukJfTF/6rtPPRCnwkur4qwRxa8vTRFBF0uk2lLoLwho=
@@ -155,6 +157,8 @@ github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnr
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
 github.com/kade-chen/library v1.0.9 h1:/apq5QbeqCL8UQbMlZZItKMfmyRdqU7T+LYo2+nXxzw=
 github.com/kade-chen/library v1.0.9/go.mod h1:xG4DoWedt8xFGENG6Bx+79ZSn4Whm673QQdeFtKKXtY=
+github.com/kade-chen/library v1.1.0 h1:RbKckMmHYJmmnjWc3SKCNe1XxR0biB0LZmomjES9tTk=
+github.com/kade-chen/library v1.1.0/go.mod h1:xG4DoWedt8xFGENG6Bx+79ZSn4Whm673QQdeFtKKXtY=
 github.com/klauspost/compress v1.17.8 h1:YcnTYrq7MikUT7k0Yb5eceMmALQPYBW/Xltxn0NAMnU=
 github.com/klauspost/compress v1.17.8/go.mod h1:Di0epgTjJY877eYKx5yC51cX2A2Vl2ibi7bDH9ttBbw=
 github.com/klauspost/cpuid/v2 v2.2.7 h1:ZWSB3igEs+d0qvnxR/ZBzXVmxkgt8DdzP6m9pfuVLDM=
@@ -332,6 +336,8 @@ google.golang.org/api v0.203.0 h1:SrEeuwU3S11Wlscsn+LA1kb/Y5xT8uggJSkIhD08NAU=
 google.golang.org/api v0.203.0/go.mod h1:BuOVyCSYEPwJb3npWvDnNmFI92f3GeRnHNkETneT3SI=
 google.golang.org/appengine v1.1.0/go.mod h1:EbEs0AVv82hx2wNQdGPgUI5lhzA/G0D9YwlJXL52JkM=
 google.golang.org/appengine v1.4.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
+google.golang.org/genai v0.0.0-20241217184453-86542a270d3e h1:XrvG1aX93Ma7QR9m2ZfiDvcCDiehHhRBIQECNiPQQxY=
+google.golang.org/genai v0.0.0-20241217184453-86542a270d3e/go.mod h1:oOXmTgRmvfizGLLCWeqvGyKJjDluaibHnZdFIZEob0k=
 google.golang.org/genproto v0.0.0-20180817151627-c66870c02cf8/go.mod h1:JiN7NxoALGmiZfu7CAH4rXhgtRTLTxftemlI0sWmxmc=
 google.golang.org/genproto v0.0.0-20190819201941-24fa4b261c55/go.mod h1:DMBHOl98Agz4BDEuKkezgsaosCRResVns1a3J2ZsMNc=
 google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013/go.mod h1:NbSheEEYHJ7i3ixzK3sjbqSGDJWnxyFXZblF3eUsNvo=

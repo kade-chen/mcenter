@@ -1,6 +1,6 @@
 # 文档明细
 
-**NOTE:** Speech To Text V1
+**NOTE** : Speech To Text V1
 
 1.[Speech To Text V1 Go Client Interfaces](https://cloud.google.com/go/docs/reference/cloud.google.com/go/speech/latest/apiv1)
 
@@ -60,10 +60,129 @@
 
 7.[Supported transcription models](https://cloud.google.com/speech-to-text/v2/docs/transcription-model#transcription_models)
 
-
-
 7.[EndPoints](https://cloud.google.com/speech-to-text/v2/docs/reference/rest#service-endpoint)
 
+# GRPC AUTHENTICATION EXAMPLE
+
+
+| 选项                         | 功能                                              | 侧重点                                         |
+|:----------------------------|:--------------------------------------------------|:---------------------------------------------:|
+| **WithTransportCredentials** | 配置底层 TLS 加密和服务器身份验证                 | 用于建立加密的安全通道（SSL/TLS）。            |
+| **WithPerRPCCredentials**    | 配置每个 RPC 调用的身份认证信息                   | 用于提供 OAuth 令牌，确保每次请求都带有授权信息。 |
+
+## 1. service account key.json
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+
+    "cloud.google.com/go/speech/apiv2/speechpb"
+    "google.golang.org/grpc"
+    "google.golang.org/grpc/credentials"
+    "google.golang.org/grpc/credentials/oauth"
+)
+
+func main() {
+    // 1. 加载服务账号 JSON 文件
+    credentialsFilePath := "/Users/kade.chen/go-kade-project/github/mcenter/etc/kade-poc.json"
+    perRPCCreds, err := oauth.NewServiceAccountFromFile(credentialsFilePath, "https://www.googleapis.com/auth/cloud-platform")
+    if err != nil {
+        fmt.Printf("Failed to create credentials: %v\n", err)
+        return
+    }
+
+    // 2. 创建 gRPC 客户端连接
+    conn, err := grpc.Dial(
+        "speech.googleapis.com:443",
+        grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(nil, "")),
+        grpc.WithPerRPCCredentials(perRPCCreds),
+    )
+    if err != nil {
+        fmt.Printf("Failed to create gRPC connection: %v\n", err)
+        return
+    }
+    defer conn.Close()
+
+    // 3. 初始化 Speech 客户端
+    client := speechpb.NewSpeechClient(conn)
+
+    // 4. 调用 ListRecognizers API
+    resp, err := client.ListRecognizers(context.Background(), &speechpb.ListRecognizersRequest{
+        Parent: "projects/kade-poc/locations/global",
+    })
+    if err != nil {
+        fmt.Printf("Failed to list recognizers: %v\n", err)
+        return
+    }
+
+    // 5. 输出 API 响应
+    fmt.Printf("Recognizers: %v\n", resp)
+}
+
+```
+
+## 2. gcloud auth application-default login
+
+```go
+	google.NewDefaultCredentials() 是 Google 官方提供的用于简化认证的默认凭证管理器。它会按照以下顺序查找和加载凭证：
+
+		1.	环境变量 GOOGLE_APPLICATION_CREDENTIALS如果设置了该环境变量，它会尝试加载服务账号 JSON 文件中的凭证。
+
+		2.	本地用户凭证（Application Default Credentials, ADC）如果您使用 gcloud auth application-default login 进行了身份验证，google.NewDefaultCredentials() 会使用本地用户的默认凭证。这种方式在开发过程中很常用。
+
+		在 Mac/Linux 上，通常位于 ~/.config/gcloud/application_default_credentials.json。
+
+		3.	运行环境中的默认凭证如果您的代码运行在 Google Cloud 上（如 GKE、Compute Engine 等），会自动使用运行环境中	分配给实例的服务账号。
+
+		4.	通过其他配置加载凭证如 Kubernetes Secret、默认配置文件等。
+```
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+
+	"cloud.google.com/go/speech/apiv2/speechpb"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/google"
+)
+
+func main() {
+	// 手动指定服务账号 JSON 文件路径
+	// os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", "/Users/kade.chen/go-kade-project/github/mcenter/etc/kade-poc.json")
+
+	// 创建 gRPC 客户端
+	conn, err := grpc.Dial(
+		"speech.googleapis.com:443",
+		grpc.WithTransportCredentials(google.NewDefaultCredentials().TransportCredentials()),
+		grpc.WithPerRPCCredentials(google.NewDefaultCredentials().PerRPCCredentials()),
+	)
+	if err != nil {
+		fmt.Printf("Failed to create gRPC client: %v\n", err)
+		return
+	}
+	defer conn.Close()
+
+	// 初始化 Speech 客户端
+	SpeechClient := speechpb.NewSpeechClient(conn)
+
+	// 调用 ListRecognizers
+	resp, err := SpeechClient.ListRecognizers(context.Background(), &speechpb.ListRecognizersRequest{
+		Parent: "projects/kade-poc/locations/global", // 替换为有效区域
+	})
+	if err != nil {
+		fmt.Printf("Failed to list recognizers: %v\n", err)
+		return
+	}
+
+	// 输出结果
+	fmt.Printf("List of recognizers: %v\n", resp)
+}
+```
 
 ```go
 设置为表示自然语言

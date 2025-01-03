@@ -31,7 +31,7 @@ func TestSimpleTTS(t *testing.T) {
 		AudioEncoding:   texttospeechpb.AudioEncoding_MULAW, //audio encoding
 		SpeakingRate:    1.0,                                //speaking rate
 		Pitch:           1.0,                                //pitch
-		VolumeGainDb:    0.0,                               //volume gain
+		VolumeGainDb:    0.0,                                //volume gain
 		SampleRateHertz: 16000,                              //sample rate  //alid values are: 8000-48000. 16000 is optimal. For best results
 		// https://cloud.google.com/text-to-speech/docs/audio-profiles
 		EffectsProfileId: []string{"telephony-class-application", "handset-class-device"}, //audio effects profile id
@@ -58,7 +58,7 @@ func TestOptimizeTTS(t *testing.T) {
 	req.AudioConfig = &texttospeechpb.AudioConfig{
 		// https://cloud.google.com/text-to-speech/docs/reference/rpc/google.cloud.texttospeech.v1#google.cloud.texttospeech.v1.AudioEncoding
 		AudioEncoding:   texttospeechpb.AudioEncoding_MULAW, //audio encoding
-		SpeakingRate:    1.14,                                //speaking rate
+		SpeakingRate:    1.14,                               //speaking rate
 		Pitch:           1.3,                                //pitch
 		VolumeGainDb:    +1.5,                               //volume gain
 		SampleRateHertz: 48000,                              //sample rate

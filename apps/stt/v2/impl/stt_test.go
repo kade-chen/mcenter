@@ -15,10 +15,10 @@ var (
 )
 
 func TestC(t *testing.T) {
-	impl.ListLocations(ctx)
+	// impl.ListLocations(ctx)
 
 	// impl.CreateRecognizer(ctx, stt.ENDPOINTS_SPEECH_GOOGLEAPIS_COM)
-	// impl.ListRecognizers(ctx, stt.ENDPOINTS_EUROPE_WEST4_SPEECH_GOOGLEAPIS_COM)
+	impl.ListRecognizers(ctx, stt.ENDPOINTS_EUROPE_WEST4_SPEECH_GOOGLEAPIS_COM)
 	// impl.GetModel(ctx, stt.ENDPOINTS_SPEECH_GOOGLEAPIS_COM)
 }
 

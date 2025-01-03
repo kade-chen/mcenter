@@ -1,13 +1,13 @@
 package api
 
 import (
+	restfulspec "github.com/emicklei/go-restful-openapi/v2"
 	"github.com/kade-chen/library/ioc"
 	"github.com/kade-chen/library/ioc/config/gorestful"
 	logs "github.com/kade-chen/library/ioc/config/log"
 	"github.com/kade-chen/mcenter/apps/policy"
 	"github.com/kade-chen/mcenter/apps/tts"
 	"github.com/kade-chen/mcenter/middlewares"
-	restfulspec "github.com/emicklei/go-restful-openapi/v2"
 	"github.com/rs/zerolog"
 )
 

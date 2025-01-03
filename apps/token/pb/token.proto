@@ -3,7 +3,7 @@ syntax = "proto3";
 package gokade.mcenter.token;
 
 // package is create pwd
-option go_package = "gitee.com/go-kade/mcenter/apps/token";
+option go_package = "github.com/kade-chen/mcenter/apps/token";
 
 import "mcenter/apps/user/pb/user.proto";
 

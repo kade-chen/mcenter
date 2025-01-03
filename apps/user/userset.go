@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/kade-chen/library/tools/format"
 	"github.com/infraboard/mcube/v2/tools/pretty"
+	"github.com/kade-chen/library/tools/format"
 )
 
 func NewUserSet() *UserSet {

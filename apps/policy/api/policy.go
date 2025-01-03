@@ -1,11 +1,11 @@
 package api
 
 import (
+	"github.com/emicklei/go-restful/v3"
 	"github.com/kade-chen/library/exception"
 	"github.com/kade-chen/library/http/response"
 	"github.com/kade-chen/mcenter/apps/policy"
 	"github.com/kade-chen/mcenter/apps/user"
-	"github.com/emicklei/go-restful/v3"
 )
 
 func (h *policyHandler) check_permission(r *restful.Request, w *restful.Response) {

@@ -12,8 +12,8 @@ func NewGeminiGenerationConfig(geminiSetting *vertex.GenaiSetting) genai.Generat
 		//这里采用核采样，不采用抽样采样
 		TopP: &geminiSetting.GenerationConfig.TopP,
 		// TopK: &geminiSetting.GenerationConfig.TopK,
-		CandidateCount:   &geminiSetting.GenerationConfig.CandidateCount,
-		MaxOutputTokens:  &geminiSetting.GenerationConfig.MaxOutputTokens,
+		CandidateCount:  &geminiSetting.GenerationConfig.CandidateCount,
+		MaxOutputTokens: &geminiSetting.GenerationConfig.MaxOutputTokens,
 		// StopSequences:    geminiSetting.GenerationConfig.StopSequences,
 		PresencePenalty:  &geminiSetting.GenerationConfig.PresencePenalty,
 		FrequencyPenalty: &geminiSetting.GenerationConfig.FrequencyPenalty,

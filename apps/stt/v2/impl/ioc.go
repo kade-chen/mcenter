@@ -4,8 +4,10 @@ import (
 	"context"
 
 	speech "cloud.google.com/go/speech/apiv2"
+	"cloud.google.com/go/speech/apiv2/speechpb"
 	"github.com/kade-chen/library/exception"
 	"github.com/kade-chen/library/ioc"
+	"github.com/kade-chen/library/ioc/config/grpc"
 	logs "github.com/kade-chen/library/ioc/config/log"
 	"github.com/kade-chen/mcenter/apps/stt"
 	"github.com/rs/zerolog"
@@ -27,6 +29,8 @@ type speechToTextV2 struct {
 	ProjectID string `toml:"project_id" json:"project_id" yaml:"project_id"  env:"project_id"`
 	// service account directory path name
 	ServiceAccount string `toml:"service_account" json:"service_account" yaml:"service_account" env:"service_account"`
+	// cc             speechpb.SpeechClient
+	cc speechpb.UnimplementedSpeechServer
 }
 
 func (s *speechToTextV2) Name() string {
@@ -34,7 +38,8 @@ func (s *speechToTextV2) Name() string {
 }
 
 func (s *speechToTextV2) Init() error {
-
+	speechpb.RegisterSpeechServer(grpc.Get().Server(), &s.cc)
+	// a := speechpb.NewSpeechClient()
 	s.log = logs.Sub(stt.AppNameV2)
 
 	s.log.Info().Msg("speech to text v2 client initializing...")

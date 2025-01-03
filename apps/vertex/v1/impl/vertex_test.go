@@ -11,8 +11,9 @@ import (
 	"cloud.google.com/go/vertexai/genai"
 	"github.com/kade-chen/library/exception"
 	"github.com/kade-chen/library/ioc"
+	"github.com/kade-chen/library/tools/format"
 	"github.com/kade-chen/mcenter/apps/vertex"
-	_ "github.com/kade-chen/mcenter/apps/vertex/impl"
+	_ "github.com/kade-chen/mcenter/apps/vertex/v1/impl"
 	"google.golang.org/api/iterator"
 	// "google.golang.org/appengine/log"
 )
@@ -31,14 +32,15 @@ func TestNoStreamingGenerateContent(t *testing.T) {
 	// 	// genai.Blob{},
 	// }
 	req.SystemInstruction.Parts = "必须中文回答"
-	req.ModelName = "gemini-2.0-flash-exp"
+	req.ModelName = "gemini-1.5-flash-002"
 	prompt := genai.Text("what is images")
 	img := genai.FileData{
 		MIMEType: "image/jpeg",
 		FileURI:  "https://storage.googleapis.com/kadeccc/cat.jpg",
 	}
 	resp, err := impl.NoStreamingGenerateContent(ctx, req, prompt, img)
-	fmt.Println(resp, err)
+	a := format.ToJSON(resp)
+	fmt.Println(a, err)
 	// if err != nil {
 	// 	fmt.Println("--------", err)
 	// }
@@ -263,7 +265,7 @@ func TestNoStreamingGenerateContent1(t *testing.T) {
 func init() {
 	req := ioc.NewLoadConfigRequest()
 	req.ConfigFile.Enabled = true
-	req.ConfigFile.Path = "../../../etc/config.toml"
+	req.ConfigFile.Path = "../../../../etc/config.toml"
 	ioc.DevelopmentSetup(req)
 	impl = ioc.Controller().Get(vertex.AppName).(vertex.Service)
 }

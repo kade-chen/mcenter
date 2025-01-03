@@ -1,8 +1,8 @@
 module github.com/kade-chen/mcenter
 
-go 1.22
+go 1.23
 
-toolchain go1.22.6
+toolchain go1.23.4
 
 require (
 	cloud.google.com/go/speech v1.25.1
@@ -14,7 +14,7 @@ require (
 	github.com/go-playground/validator/v10 v10.20.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/infraboard/mcube/v2 v2.0.17
-	github.com/kade-chen/library v1.0.9
+	github.com/kade-chen/library v1.1.0
 	github.com/rs/xid v1.5.0
 	github.com/rs/zerolog v1.33.0
 	github.com/spf13/cobra v1.8.1
@@ -38,6 +38,7 @@ require (
 	cloud.google.com/go/compute/metadata v0.5.2 // indirect
 	cloud.google.com/go/iam v1.2.1 // indirect
 	cloud.google.com/go/longrunning v0.6.1 // indirect
+	gitee.com/go-kade/library/v2 v2.1.3
 	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/caarlos0/env/v6 v6.10.1 // indirect
@@ -56,6 +57,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/snappy v0.0.4 // indirect
+	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/s2a-go v0.1.8 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.4 // indirect
@@ -97,6 +99,7 @@ require (
 	golang.org/x/sys v0.26.0 // indirect
 	golang.org/x/text v0.19.0 // indirect
 	golang.org/x/time v0.7.0 // indirect
+	google.golang.org/genai v0.0.0-20241217184453-86542a270d3e // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20241007155032-5fefd90f89a9 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20241015192408-796eee8c2d53 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect

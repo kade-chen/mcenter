@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package gokade.mcenter.notify;
 
-option go_package = "gitee.com/go-kade/mcenter/apps/notify";
+option go_package = "github.com/kade-chen/mcenter/apps/notify";
 
 
 message MailConfig {

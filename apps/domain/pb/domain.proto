@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package gokade.mcenter.domain;
 
-option go_package = "gitee.com/go-kade/mcenter/apps/domain";
+option go_package = "github.com/kade-chen/mcenter/apps/domain";
 
 import "mcenter/apps/domain/pb/ldap.proto";
 import "mcenter/apps/domain/pb/feishu.proto";

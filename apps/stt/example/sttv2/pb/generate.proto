@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package gokade.mcenter.stt;
+
+//生成路径
+option go_package = "github.com/kade-chen/mcenter/apps/stt/example/sttv2/pb";
+
+service RPC { rpc SayHello(stream CC) returns (stream Message); }
+
+message CC {
+  // @gotags: json:"audio_data"
+  bytes audioData = 1;
+}
+
+message Message {
+  // @gotags: json:"message"
+  string message = 1;
+}

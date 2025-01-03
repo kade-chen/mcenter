@@ -2,6 +2,8 @@
 
 **NOTE:** vertex-ai
 
+0.[Overview of Generative AI on Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/docs)
+
 1.[Vertex AI release notes](https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes)
 
 2.[Generative AI on Vertex AI release notes](https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes-archive)
@@ -101,5 +103,36 @@ Google Cloud 中管理和响应数据突发事件的原则性方法
 https://cloud.google.com/docs/security/incident-response?hl=zh-cn#data_incident_response_process_2
 
 ```
+
+```go
+1. PresencePenalty (存在惩罚)
+
+作用: PresencePenalty 的作用是惩罚模型在生成文本中重复使用已经出现过的 token (词或子词)。它鼓励模型尝试使用新的、之前未出现过的 token，从而提高文本的多样性。
+
+适用场景:
+    当你希望模型生成更具创意、多样化的文本，避免简单重复时，可以适当调高 PresencePenalty 的值。
+    例如，在头脑风暴、创意写作、生成不同风格的文本时比较有用。
+
+
+2. FrequencyPenalty (频率惩罚)
+
+作用: FrequencyPenalty 的作用是惩罚模型在生成文本中频繁使用某些 token。与 PresencePenalty 不同，它关注的是 token 出现的次数，而不是是否出现过。它鼓励模型减少高频词的使用，从而提高文本的多样性。
+
+适用场景:
+    当你希望模型避免重复使用某些高频词，生成更丰富、更自然的文本时，可以适当调高 FrequencyPenalty 的值。
+    例如，在对话生成、文章写作、避免口水话时比较有用。
+
+总结：
+    PresencePenalty (存在惩罚)：
+        负值： 惩罚已经出现过的 token，重复值越多，重复token越多
+        0： 不进行惩罚，模型会按照其原始的概率分布进行选择
+        正值： 鼓励模型避免重复已出现过的token，重复值越少，越容易生成新的token
+    FrequencyPenalty (频率惩罚)：
+        负值： 惩罚出现频率低的 token，频率越低，重复token越多
+        0： 不进行惩罚，模型会按照其原始的概率分布进行选择
+        正值： 惩罚重复性高的 token，重复值越少，越容易生成新的token
+```
+
+![presence/frequency](image-1.png)
 
 ![image](image.png)
