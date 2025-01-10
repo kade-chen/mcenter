@@ -36,4 +36,6 @@ type ServiceV2 interface {
 	ListRecognizers(context.Context, ENDPOINT) error
 	CreateRecognizer(context.Context, ENDPOINT)
 	StreamingRecognize(context.Context, ENDPOINT) (speech.Speech_StreamingRecognizeClient, error)
+	//get service account
+	GetServiceAccount() string
 }

@@ -250,3 +250,7 @@ func (s *speechToTextV2) GetModel(ctx context.Context, endpoint stt.ENDPOINT) {
 func (s *speechToTextV2) StreamingRecognize(ctx context.Context, endpoint stt.ENDPOINT) (speechpb.Speech_StreamingRecognizeClient, error) {
 	return s.clinets[endpoint].StreamingRecognize(ctx)
 }
+
+func (s *speechToTextV2) GetServiceAccount() string {
+	return s.ServiceAccount
+}

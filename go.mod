@@ -14,7 +14,7 @@ require (
 	github.com/go-playground/validator/v10 v10.20.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/infraboard/mcube/v2 v2.0.17
-	github.com/kade-chen/library v1.1.0
+	github.com/kade-chen/library v1.1.1
 	github.com/rs/xid v1.5.0
 	github.com/rs/zerolog v1.33.0
 	github.com/spf13/cobra v1.8.1

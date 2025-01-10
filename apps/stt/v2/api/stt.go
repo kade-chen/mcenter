@@ -3,18 +3,25 @@ package api
 import (
 	"fmt"
 	"io"
-	"log"
+	"net/http"
 
 	"cloud.google.com/go/speech/apiv2/speechpb"
 	"github.com/emicklei/go-restful/v3"
 	"github.com/gorilla/websocket"
-
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/credentials/oauth"
 )
 
 const chunkSize = 15 * 1024 // 每个分块的大小：15KB
+
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+	CheckOrigin: func(r *http.Request) bool {
+		// 在这里可以根据请求的 Origin 进行判断，返回 true 表示允许连接
+		// 返回 false 表示拒绝连接
+		return true // 允许所有请求
+	},
+}
+
 func (h *speechToTextV2Handler) streamingRecognize(r *restful.Request, w *restful.Response) {
 	// os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", "/Users/kade.chen/go-kade-project/github/mcenter/etc/kade-poc.json")
 	// 2.Upgrade to WebSocket
@@ -26,27 +33,9 @@ func (h *speechToTextV2Handler) streamingRecognize(r *restful.Request, w *restfu
 	}
 	h.log.Info().Msgf("WebSocket upgrade success")
 	defer conn.Close()
-	// 1. 加载服务账号 JSON 文件
-	credentialsFilePath := "/Users/kade.chen/go-kade-project/github/mcenter/etc/kade-poc.json"
-	perRPCCreds, err := oauth.NewServiceAccountFromFile(credentialsFilePath, "https://www.googleapis.com/auth/cloud-platform")
-	if err != nil {
-		fmt.Printf("Failed to create credentials: %v\n", err)
-		return
-	}
 
-	// 2. 创建 gRPC 客户端连接
-	conn1, err := grpc.Dial(
-		"speech.googleapis.com:443",
-		grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(nil, "")),
-		grpc.WithPerRPCCredentials(perRPCCreds),
-	)
-	if err != nil {
-		fmt.Printf("Failed to create gRPC connection: %v\n", err)
-		return
-	}
-	// defer conn.Close()
 	// 3. 初始化 Speech 客户端
-	SpeechClient := speechpb.NewSpeechClient(conn1)
+	SpeechClient := speechpb.NewSpeechClient(h.grpc)
 
 	Speech_StreamingRecognizeClient, err := SpeechClient.StreamingRecognize(r.Request.Context())
 	// defer Speech_StreamingRecognizeClient.CloseSend() // 确保在 goroutine 结束时关闭发送流
@@ -61,19 +50,21 @@ func (h *speechToTextV2Handler) streamingRecognize(r *restful.Request, w *restfu
 	// 启动 goroutine 读取 WebSocket 消息并发送到 gRPC
 
 	go func() {
-
 		defer Speech_StreamingRecognizeClient.CloseSend() // 确保在 goroutine 结束时关闭发送流
-		_, message, err := conn.ReadMessage()             // 读取 WebSocket 消息
-		fmt.Println(len(message))
+		defer h.log.Info().Msg("Closing gRPC stream")
+
+		_, message, err := conn.ReadMessage() // 读取 WebSocket 消息
+		h.log.Info().Msgf("Received message length: %d", len(message))
+
 		if err != nil {
 			// response.Failed(w, exception.NewInternalServerError("读取消息失败:%s", err))
 			h.log.Error().Msgf("Read message error: %v", err)
 			conn.WriteMessage(websocket.TextMessage, []byte(fmt.Sprintf("Read message error: %v", err)))
-			// break
+			return
 		}
 		if err == io.EOF {
-			fmt.Println("Read message EOF")
-			// break // 文件读取完毕
+			h.log.Info().Msg("Send message EOF")
+			return // 文件读取完毕
 		}
 
 		for i := 0; i < len(message); i += chunkSize {
@@ -94,6 +85,7 @@ func (h *speechToTextV2Handler) streamingRecognize(r *restful.Request, w *restfu
 			err := Speech_StreamingRecognizeClient.Send(req)
 
 			if err == io.EOF {
+				h.log.Info().Msg("Send message EOF")
 				break // 文件读取完毕
 			}
 
@@ -110,19 +102,37 @@ func (h *speechToTextV2Handler) streamingRecognize(r *restful.Request, w *restfu
 	// 5. Receive results from Speech API and send back to WebSocket
 	// 接收返回结果
 	for {
-		fmt.Println("start recv-----")
+		h.log.Info().Msg("Received message...")
 		resp, err := Speech_StreamingRecognizeClient.Recv()
 		if err == io.EOF {
+			h.log.Info().Msg("Received message EOF")
 			break
 		}
 		if err != nil {
-			log.Fatalf("Failed to receive gRPC message: %v", err)
+			h.log.Error().Msgf("Failed to receive gRPC message: %v", err)
+			conn.WriteMessage(websocket.TextMessage, []byte(fmt.Sprintf("Failed to receive gRPC message: %v", err)))
+			break
 		}
 
 		// 解析返回结果
-		for _, result := range resp.GetResults() {
-			for _, alternative := range result.GetAlternatives() {
-				fmt.Printf("Transcript: %s\n", alternative.GetTranscript())
+		for _, result := range resp.Results {
+
+			go func(SpeechRecognitionAlternative []*speechpb.SpeechRecognitionAlternative) {
+				for _, alternative := range SpeechRecognitionAlternative {
+					h.log.Info().Msgf("识别结果列表：%v %f", alternative.Transcript, alternative.Confidence)
+				}
+			}(result.Alternatives)
+
+			if result.IsFinal {
+				h.log.Info().Msgf("最后一次结果：%v %f", result.Alternatives[0].Transcript, result.Alternatives[0].Confidence)
+				conn.WriteMessage(websocket.TextMessage, []byte(fmt.Sprintf("最后一次结果：%v", result.Alternatives[0].Transcript)))
+				break
+			} else {
+				if result.Stability > 0.8 {
+					h.log.Info().Msgf("大于0.8 stable value: %v, 中间结果大于0.8 stable results: %v", result.Stability, result.Alternatives[0].Transcript)
+					conn.WriteMessage(websocket.TextMessage, []byte(fmt.Sprintf("中间结果大于0.8的稳定结果：%v", result.Alternatives[0].Transcript)))
+					break
+				}
 			}
 		}
 	}
