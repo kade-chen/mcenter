@@ -67,7 +67,7 @@ type Content struct {
 // Return a new NewGenaiSetting
 func NewGenaiSetting() *GenaiSetting {
 	return &GenaiSetting{
-		Regional: 24,
+		Regional: 2,
 		// https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/inference#safetysetting
 		SafetySetting: []*genai.SafetySetting{
 			{

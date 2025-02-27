@@ -48,6 +48,11 @@
 
 22.[Vertex AI image-requirements](https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/image-understanding#image-requirements) Gemini multimodal models support the following image MIME types
 
+23.[CountTokens API](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/count-tokens#curl)
+
+24.[Package cloud.google.com/go/vertexai/genai/tokenizer](https://cloud.google.com/vertex-ai/generative-ai/docs/reference/go/latest/genai/tokenizer)
+
+
 ```go
 Vertex AI服务 及 Google Cloud 提供相关数据安全与隐私保护说明和证明。
 参考：
@@ -133,6 +138,6 @@ https://cloud.google.com/docs/security/incident-response?hl=zh-cn#data_incident_
         正值： 惩罚重复性高的 token，重复值越少，越容易生成新的token
 ```
 
-![presence/frequency](image-1.png)
+![presence/frequency](presenceFrequency.png)
 
-![image](image.png)
+![image](muilModel.png)

@@ -3,7 +3,27 @@ package vertex
 import (
 	"github.com/kade-chen/library/tools/generics"
 	"google.golang.org/genai"
+	// genai2 "google.golang.org/genai"
 )
+
+type Gemini2Config struct {
+	ModelName             string `json:"model_name"`
+	GenerateContentConfig *genai.GenerateContentConfig
+	Contents              []*genai.Content
+}
+
+// this method is default Gemini2Config
+func NewDefaultsGemini2Config() *Gemini2Config {
+	return &Gemini2Config{}
+}
+
+// this method is to configure the default Gemini2Config configuration
+func NewGemini2Config() *Gemini2Config {
+	return &Gemini2Config{
+		ModelName:             "gemini-2.0-flash-001",
+		GenerateContentConfig: NewTestGenerateContentConfig(),
+	}
+}
 
 // this method is to configure the default gemini configuration
 func NewGenerateContentConfig() *genai.GenerateContentConfig {
@@ -24,6 +44,7 @@ func NewTestGenerateContentConfig() *genai.GenerateContentConfig {
 		Temperature: generics.Generics(0.0),
 		TopP:        generics.Generics(1.0),
 		TopK:        generics.Generics(0.0),
+		//must be set to 1
 		// CandidateCount:  1,
 		MaxOutputTokens: generics.Generics[int64](8192),
 		// StopSequences:      []string{},
@@ -101,8 +122,8 @@ func NewTestGenerateContentConfig() *genai.GenerateContentConfig {
 		//Resource name of a context cache that can be used in subsequent requests.
 		// CachedContent:      "",
 		//可以返回的模态集。
-		// ResponseModalities: []string{"TEXT"}, // "AUDIO", "IMAGE",
-		ResponseModalities: []string{"TEXT", "IMAGE"},
+		ResponseModalities: []string{"TEXT"}, // "AUDIO", "IMAGE",
+		// ResponseModalities: []string{"TEXT", "IMAGE"},
 
 		//如果指定，将使用指定的媒体分辨率。
 		// MediaResolution: genai.MediaResolutionHigh,

@@ -31,8 +31,8 @@ func TestNoStreamingGenerateContent(t *testing.T) {
 	// 	// genai.FileData{},
 	// 	// genai.Blob{},
 	// }
-	req.SystemInstruction.Parts = "必须中文回答"
-	req.ModelName = "gemini-1.5-flash-002"
+	// req.SystemInstruction.Parts = "必须中文回答"
+	req.ModelName = "gemini-2.0-flash-001"
 	prompt := genai.Text("what is images")
 	img := genai.FileData{
 		MIMEType: "image/jpeg",

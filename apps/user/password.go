@@ -1,10 +1,13 @@
 package user
 
 import (
+	"context"
 	"fmt"
 	"time"
 
 	"github.com/kade-chen/library/exception"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -39,27 +42,42 @@ func (p *Password) CheckPassword(password string) error {
 // CheckPasswordExpired 检测password是否已经过期
 // remindDays 提前多少天提醒用户修改密码
 // expiredDays 多少天后密码过期
-func (p *Password) CheckPasswordExpired(remindDays, expiredDays uint) error {
+// BeforeExpiredRemindDays =10  password_expired_days=90
+func (p *Password) CheckPasswordExpired(remindDays, expiredDays uint, col *mongo.Collection, userID string) error {
 	// 永不过期
 	if expiredDays == 0 {
 		return nil
 	}
 
 	now := time.Now()
-	expiredAt := time.Unix(p.UpdateAt, 0).Add(time.Duration(expiredDays) * time.Hour * 24)
-
+	expiredAt := time.Unix(p.CreateAt, 0).Add(time.Duration(expiredDays) * time.Hour * 24)
+	//没过期是负值
 	ex := now.Sub(expiredAt).Hours() / 24
+	// 提前提醒10天
+	if 0 < -ex && -ex <= float64(remindDays) {
+		err := p.SetNeedReset(col, userID, "Password will expire in %f days, Please reset password", -ex)
+		return err
+	}
+
+	// if ex >= -float64(remindDays) {
+	// 	p.SetNeedReset(col, userID, "密码%f天后过期, 请重置密码", -ex)
+	// }
 	if ex > 0 {
-		return exception.NewPasswordExired("password expired %f days", ex)
-	} else if ex >= -float64(remindDays) {
-		p.SetNeedReset("密码%f天后过期, 请重置密码", -ex)
+		return exception.NewPasswordExired("password expired %f days, Please contact the administrator to reset the password", ex)
 	}
 
 	return nil
 }
 
 // SetNeedReset 需要被重置
-func (p *Password) SetNeedReset(format string, a ...interface{}) {
-	p.NeedReset = true
-	p.ResetReason = fmt.Sprintf(format, a...)
+func (p *Password) SetNeedReset(col *mongo.Collection, userID, format string, a ...interface{}) error {
+
+	_, err := col.UpdateOne(context.TODO(), bson.M{"_id": userID}, bson.M{
+		"$set": bson.M{
+			"password.need_reset":   true,
+			"password.reset_reason": fmt.Sprintf(format, a...),
+			"password.update_at":    time.Now().Unix(),
+		},
+	})
+	return exception.NewPasswordExired("Update user password configuration failed, %v", err)
 }

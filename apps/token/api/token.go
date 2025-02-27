@@ -63,6 +63,7 @@ func (h *tokenHandler) RevolkToken(r *restful.Request, w *restful.Response) {
 }
 
 func (h *tokenHandler) Validate_Token(r *restful.Request, w *restful.Response) {
+	h.log.Info().Msg("validate token")
 	req := token.NewValidateTokenRequest("")
 	//1.cookis
 	if len(r.Request.Cookies()) != 0 {

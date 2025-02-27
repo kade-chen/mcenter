@@ -56,6 +56,7 @@ func (g *gemini) Init() error {
 		Project:     g.ProjectID,
 		Location:    "us-central1",
 		Credentials: creds,
+		// HTTPOptions: gemini2.HTTPOptions{APIVersion: "v1"},
 	})
 	if err != nil {
 		return err

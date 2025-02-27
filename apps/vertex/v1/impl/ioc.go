@@ -42,7 +42,7 @@ func (g *gemini) Init() error {
 	// t.log.Info().Msg("speech to text v1 client successfully initlialized")
 	client, _ := genai.NewClient(context.Background(), g.ProjectID, "global", option.WithCredentialsFile(g.ServiceAccount))
 	g.clientsv2 = client
-	for i := 24; i < 26; i++ {
+	for i := 0; i < 5; i++ {
 		// for i := 0; i < len(VertexLocationToString); i++ {
 		client, err := genai.NewClient(context.Background(), g.ProjectID, vertex.GetLocationString(vertex.LOCATION(i)), option.WithCredentialsFile(g.ServiceAccount))
 		if err != nil {
