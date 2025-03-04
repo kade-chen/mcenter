@@ -143,7 +143,7 @@ func (h *speechToTextHandler) streamingRecognize(r *restful.Request, w *restful.
 
 			} else {
 				if result.Stability > 0.8 {
-					h.log.Info().Msgf("大于0.8 stable value: %v, 中间结果大于0.8 stable results: %v", result.Stability, result.Alternatives[0].Transcript)
+					h.log.Info().Msgf("大于0.8 stable value: %v, 中间结果大于0.9 stable results: %v", result.Stability, result.Alternatives[0].Transcript)
 					conn.WriteMessage(websocket.TextMessage, []byte(fmt.Sprintf("中间结果大于0.8的稳定结果：%v", result.Alternatives[0].Transcript)))
 				}
 			}

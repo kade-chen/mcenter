@@ -49,6 +49,29 @@ func (s *service) issuer_token(ctx context.Context, req *token.IssueTokenRequest
 func (s *service) blockOtherWebToken(ctx context.Context, tk *token.Token) error {
 	// 共享账号不关闭之前的Token
 	if tk.SharedUser {
+		now := time.Now()
+		status := token.NewStatus()
+		status.IsBlock = true
+		status.BlockAt = now.UnixMilli()
+		status.BlockReason = fmt.Sprintf("你于 %s 从其他地方通过 %s 登录", now.Format(time.RFC3339), tk.GrantType)
+		status.BlockType = token.BLOCK_TYPE_OTHER_PLACE_LOGGED_IN
+
+		rs, err := s.col.UpdateMany(
+			ctx,
+			bson.M{
+				"platform": token.PLATFORM_WEB,
+				"domain":   bson.M{"$eq": tk.Domain},
+				"_id":      tk.AccessToken,
+				// "issue_at":        bson.M{"$lt": tk.IssueAt}, // 使用 $lte 小于等于
+				"status.is_block": false,
+			},
+			bson.M{"$set": bson.M{"status": status}}, // 更新 status 字段，设置为新的 status 值
+		)
+		if err != nil {
+			s.log.Error().Msgf("updateMany error: %v", err)
+			return err
+		}
+		s.log.Debug().Msgf("block %d tokens", rs.ModifiedCount)
 		return nil
 	}
 
