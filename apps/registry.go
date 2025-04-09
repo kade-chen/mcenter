@@ -25,4 +25,8 @@ import (
 
 	//注册所有provider
 	_ "github.com/kade-chen/mcenter/apps/token/provider/all"
+
+	//注册gemini provider all
+	_ "github.com/kade-chen/mcenter/apps/vertex/provider"
+	_ "github.com/kade-chen/mcenter/apps/vertex/provider/registry"
 )

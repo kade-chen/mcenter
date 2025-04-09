@@ -29,6 +29,7 @@ func TestNoGenerateContent(t *testing.T) {
 					Text: "k8s是什么",
 				},
 			},
+			Role: "user",
 		},
 	}
 	a, err := impl.NoStreamingGenerateContent(ctx, config)
@@ -50,6 +51,7 @@ func TestNoStreamingGenerateContent(t *testing.T) {
 					Text: "生成一张苹果照片",
 				},
 			},
+			Role: "user",
 		},
 	}
 	a, err := impl.NoStreamingGenerateContent(ctx, config)
@@ -107,12 +109,14 @@ func TestStreamingGenerateContent(t *testing.T) {
 					Text: "k8s是什么",
 				},
 			},
+			Role: "user",
 		},
 	}
 	iter1 := impl.StreamingGenerateContent(ctx, config)
 	fmt.Println("InlineData:", format.ToJSON(iter1))
 	for a, err := range iter1 {
 		if err != nil {
+
 			exception.NewInternalServerError("ERROR: %v", err.Error())
 		}
 		fmt.Print(a.Candidates[0].Content.Parts[0].Text)

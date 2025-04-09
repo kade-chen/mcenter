@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"cloud.google.com/go/auth/credentials"
 	"github.com/kade-chen/library/exception"
 	"github.com/kade-chen/library/ioc"
 	logs "github.com/kade-chen/library/ioc/config/log"
@@ -45,6 +46,14 @@ func (g *gemini) Init() error {
 	if err != nil {
 		log.Fatal(err)
 	}
+	_ = creds
+
+	a, _ := credentials.DetectDefault(&credentials.DetectOptions{
+		Scopes:          []string{"https://www.googleapis.com/auth/cloud-platform"},
+		CredentialsFile: g.ServiceAccount,
+	})
+
+	// _ = a
 	// t.log.Info().Msg("speech to text v1 client initializing...")
 	// t.log.Info().Msg("speech to text v1 client successfully initlialized")
 	client, err := gemini2.NewClient(context.Background(), &gemini2.ClientConfig{
@@ -55,7 +64,7 @@ func (g *gemini) Init() error {
 		Backend:     gemini2.BackendVertexAI,
 		Project:     g.ProjectID,
 		Location:    "us-central1",
-		Credentials: creds,
+		Credentials: a,
 		// HTTPOptions: gemini2.HTTPOptions{APIVersion: "v1"},
 	})
 	if err != nil {

@@ -25,6 +25,7 @@ type Service interface {
 	//This section demonstrates how to transcribe streaming audio, like the input from a microphone, to text.
 	//Streaming speech recognition allows you to stream audio to Speech-to-Text and receive a stream speech recognition results in real time as the audio is processed.
 	//There is a 10 MB limit on all streaming requests sent to the API. This limit applies to to both the initial StreamingRecognize request and the size of each individual message in the stream. Exceeding this limit will throw an error.
+	//limit 305s per request
 	SpeechToTextStreamingRecognize(context.Context, *speechpb.StreamingRecognizeRequest) (speechpb.Speech_StreamingRecognizeClient, error)
 
 	LocalSpeechToTextStreamingRecognize(ctx context.Context, req *speechpb.StreamingRecognizeRequest) (string, error)

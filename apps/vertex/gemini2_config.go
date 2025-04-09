@@ -28,10 +28,10 @@ func NewGemini2Config() *Gemini2Config {
 // this method is to configure the default gemini configuration
 func NewGenerateContentConfig() *genai.GenerateContentConfig {
 	return &genai.GenerateContentConfig{
-		Temperature:     generics.Generics(2.0),
-		TopP:            generics.Generics(0.0),
-		TopK:            generics.Generics(0.0),
-		MaxOutputTokens: generics.Generics[int64](8192),
+		Temperature:     generics.Generics[float32](2.0),
+		TopP:            generics.Generics[float32](0.0),
+		TopK:            generics.Generics[float32](1),
+		MaxOutputTokens: generics.Generics[int32](8192),
 	}
 }
 
@@ -41,12 +41,12 @@ func NewTestGenerateContentConfig() *genai.GenerateContentConfig {
 		// SystemInstruction: &genai.Content{
 		// 	Parts: []*genai.Part{},
 		// },
-		Temperature: generics.Generics(0.0),
-		TopP:        generics.Generics(1.0),
-		TopK:        generics.Generics(0.0),
+		Temperature: generics.Generics[float32](0.0),
+		TopP:        generics.Generics[float32](1.0),
+		TopK:        generics.Generics[float32](1.0),
 		//must be set to 1
 		// CandidateCount:  1,
-		MaxOutputTokens: generics.Generics[int64](8192),
+		MaxOutputTokens: generics.Generics[int32](8192),
 		// StopSequences:      []string{},
 		//logprobs 参数指的是模型生成文本的对数概率。它是一个列表，其中每个元素对应于生成文本中每个 token 的对数概率。
 		//logprobs 参数让你访问 Gemini 模型生成的文本中每个 token 的对数概率，为你提供更深入的理解和控制。它在评估模型的不确定性、调试问题、分析文本和控制生成过程等方面都有重要的应用价值。
@@ -54,14 +54,14 @@ func NewTestGenerateContentConfig() *genai.GenerateContentConfig {
 		//[0-5]
 		// Logprobs: generics.Generics[int64](5.0),
 		//[-2,2) 存在
-		PresencePenalty: generics.Generics(1.9),
+		PresencePenalty: generics.Generics[float32](1.9),
 		//[-2,2) 概率
-		FrequencyPenalty: generics.Generics(0.0),
+		FrequencyPenalty: generics.Generics[float32](0.0),
 		//TYPE_INT32
 		//seed 参数（通常称为随机种子）主要用于控制模型生成结果的随机性和可复现性
 		//简单来说，seed 值就像一个控制随机性的开关。它让你在需要时可以锁定模型的行为，以便更好地控制和理解它的输出。
 		//默认是这个随机数种子
-		Seed: generics.Generics[int64](-2147483648),
+		Seed: generics.Generics[int32](-2147483648),
 		// ResponseMIMEType: "application/json",
 		/*
 			ResponseSchema: &genai.Schema{

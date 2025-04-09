@@ -30,7 +30,7 @@
 
 14.[Streaming Speech-to-Text API Recognition Requests](https://cloud.google.com/speech-to-text/docs/speech-to-text-requests#streaming-recognition)
 
-15.[Quotas and limits](https://cloud.google.com/speech-to-text/v2/quotas)
+15.[Quotas and limits](https://cloud.google.com/speech-to-text/quotas)
 
 16.[处理时长](https://cloud.google.com/speech-to-text/docs/speech-to-text-requests#synchronous-recognition)
 
@@ -61,6 +61,8 @@
 7.[Supported transcription models](https://cloud.google.com/speech-to-text/v2/docs/transcription-model#transcription_models)
 
 7.[EndPoints](https://cloud.google.com/speech-to-text/v2/docs/reference/rest#service-endpoint)
+
+8.[Quotas and limits](https://cloud.google.com/speech-to-text/v2/quotas)
 
 # GRPC AUTHENTICATION EXAMPLE
 

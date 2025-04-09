@@ -73,6 +73,8 @@ const (
 	LOCATION_MiddleEast_Central1
 	//Tel Aviv, Israel 以色列-特拉维夫
 	LOCATION_MiddleEast_West1
+
+	LOCATION_Global
 )
 
 // 创建双向映射
@@ -146,6 +148,8 @@ var VertexLocationToString = map[LOCATION]string{
 	LOCATION_MiddleEast_Central1: "me-central1",
 	//Tel Aviv, Israel 以色列-特拉维夫
 	LOCATION_MiddleEast_West1: "me-west1",
+
+	LOCATION_Global: "global",
 }
 
 var VertexStringToLocation = map[string]LOCATION{
@@ -218,6 +222,8 @@ var VertexStringToLocation = map[string]LOCATION{
 	"me-central1": LOCATION_MiddleEast_Central1,
 	//Tel Aviv, Israel 以色列-特拉维夫
 	"me-west1": LOCATION_MiddleEast_West1,
+
+	"global": LOCATION_Global,
 }
 
 // 获取 LOCATION 对应的字符串

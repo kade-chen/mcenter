@@ -33,6 +33,7 @@ func TestNoStreamingGenerateContent(t *testing.T) {
 	// }
 	// req.SystemInstruction.Parts = "必须中文回答"
 	req.ModelName = "gemini-2.0-flash-001"
+	req.Regional = vertex.LOCATION_US_Central1
 	prompt := genai.Text("what is images")
 	img := genai.FileData{
 		MIMEType: "image/jpeg",

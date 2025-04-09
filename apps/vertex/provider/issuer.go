@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"cloud.google.com/go/vertexai/genai"
 	"github.com/kade-chen/mcenter/apps/vertex"
+	"google.golang.org/genai"
 )
 
 var (
@@ -19,11 +19,23 @@ type Issuer interface {
 }
 
 type ModelIssuer interface {
-	ModelIssue(context.Context, *vertex.GenaiSetting, ...genai.Part) *genai.GenerateContentResponseIterator
+	ModelIssue(context.Context, *vertex.GenaiSetting, ...genai.Part) *genai.GenerateContentResponse
 }
 
 func Registe(i Issuer) {
 	m[i.GrantModel()] = i
+}
+
+func List() (cc []vertex.GRANT_MODEL, err error) {
+	for k, _ := range m {
+		cc = append(cc, k)
+	}
+
+	if len(cc) == 0 {
+		return nil, fmt.Errorf("no issuer")
+	}
+
+	return cc, nil
 }
 
 func Init() error {

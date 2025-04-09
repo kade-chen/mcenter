@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package gokade.mcenter.vertex;
+
+// package is create pwd
+option go_package = "github.com/kade-chen/mcenter/apps/vertex";
+
+// 授权类型
+enum GRANT_MODEL {
+  int64 id = 1 [(gogoproto.customtype) = "string"];
+}

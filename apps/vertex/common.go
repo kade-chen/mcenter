@@ -119,7 +119,7 @@ func NewGenaiSetting() *GenaiSetting {
 			// FrequencyPenalty [-2，2), The default is 0.
 			// 这个参数惩罚模型生成在文本中出现频率高的词语。值越高，模型越倾向于避免使用出现频率高的词语，即使这些词语之前已经出现过。这有助于减少重复，并鼓励模型使用更广泛的词汇。值越低，模型越有可能重复使用高频词语。
 			FrequencyPenalty: 1.9,
-			// ResponseMIMEType: "application/json",
+			ResponseMIMEType: "application/json",
 			// ResponseMIMEType: "text/html",
 			// ResponseSchema: &genai.Schema{
 			// 	Type: genai.TypeArray,
