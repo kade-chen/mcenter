@@ -3,11 +3,11 @@ package vertex
 import "fmt"
 
 // 授权类型
-type GRANT_MODEL int32
+type GRANT_MODEL uint8
 
 const (
 	// bson:"gemini-2.0-flash" json:"gemini-2.0-flash"
-	GRANT_MODEL_GEMINI_2_0_Flash GRANT_MODEL = 0
+	GRANT_MODEL_GEMINI_2_0_Flash_001 GRANT_MODEL = 0
 	// bson:"gemini-2.0-pro" json:"gemini-2.0-pro"
 	GRANT_MODEL_Gemini_2_0_Pro GRANT_MODEL = 1
 	// bson:"gemini-2.0-flash-lite" json:"gemini-2.0-flash-lite"
@@ -27,7 +27,7 @@ const (
 // Enum value maps for GRANT_MODEL.
 var (
 	GRANT_MODEL_name = map[GRANT_MODEL]string{
-		0: "gemini-2.0-flash",
+		0: "gemini-2.0-flash-001",
 		1: "gemini-2.0-pro-exp-02-05",
 		2: "gemini-2.0-flash-lite",
 		3: "gemini-2.0-flash-thinking-exp-01-21",
@@ -37,7 +37,7 @@ var (
 		7: "gemini-1.0-pro-vision",
 	}
 	GRANT_MODEL_value = map[string]GRANT_MODEL{
-		"gemini-2.0-flash":                    0,
+		"gemini-2.0-flash-001":                0,
 		"gemini-2.0-pro-exp-02-05":            1,
 		"gemini-2.0-flash-lite":               2,
 		"gemini-2.0-flash-thinking-exp-01-21": 3,

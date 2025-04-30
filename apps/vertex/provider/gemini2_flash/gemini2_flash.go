@@ -3,11 +3,11 @@ package gemini2flash
 import (
 	"context"
 	"fmt"
+	"iter"
 
 	"cloud.google.com/go/auth/credentials"
 
 	"github.com/kade-chen/library/ioc"
-	"github.com/kade-chen/library/tools/format"
 	"google.golang.org/genai"
 
 	"github.com/kade-chen/mcenter/apps/vertex"
@@ -21,15 +21,15 @@ func init() {
 }
 
 type Gemini2Flash struct {
-	gemini_clients map[vertex.GEMINI2_LOCATION]*genai.Client
+	gemini_clients map[vertex.GEMINI_2_LOCATION]*genai.Client
 }
 
 func (g *Gemini2Flash) GrantModel() vertex.GRANT_MODEL {
-	return vertex.GRANT_MODEL_GEMINI_2_0_Flash
+	return vertex.GRANT_MODEL_GEMINI_2_0_Flash_001
 }
 
 func (g *Gemini2Flash) Init() error {
-	g.gemini_clients = make(map[vertex.GEMINI2_LOCATION]*genai.Client)
+	g.gemini_clients = make(map[vertex.GEMINI_2_LOCATION]*genai.Client)
 	// data, err := os.ReadFile(ioc.Config().Get(provider.AppName).(*provider.Vertex).ServiceAccount_GEMINI_2_0_Flash)
 	// if err != nil {
 	// 	return err
@@ -39,13 +39,16 @@ func (g *Gemini2Flash) Init() error {
 	// 	log.Fatal(err)
 	// }
 	// _ = creds
+	//https://pkg.go.dev/cloud.google.com/go/auth/credentials
 	creds1, _ := credentials.DetectDefault(&credentials.DetectOptions{
-		Scopes:          []string{"https://www.googleapis.com/auth/cloud-platform"},
+		Scopes: []string{"https://www.googleapis.com/auth/cloud-platform"},
+		// CredentialsJSON: data,
 		CredentialsFile: ioc.Config().Get(provider.AppName).(*provider.Vertex).ServiceAccount_GEMINI_2_0_Flash,
 	})
 
 	for i := range make([]int, len(vertex.GET_GEMINI2_LOCATION_STRING)) {
-		fmt.Println(vertex.Get_GEMINI2_LOCATION_STRING(vertex.GEMINI2_LOCATION(i)))
+		//echo init regional
+		// fmt.Println(vertex.Get_GEMINI2_LOCATION_STRING(vertex.GEMINI_2_LOCATION(i)))
 		// _ = creds1
 		// t.log.Info().Msg("speech to text v1 client initializing...")
 		// t.log.Info().Msg("speech to text v1 client successfully initlialized")
@@ -56,7 +59,7 @@ func (g *Gemini2Flash) Init() error {
 			// APIKey:   "AIzaSyAWtMUuGHBtUCSH829TcHiCO21m_8w08lU",
 			Backend:     genai.BackendVertexAI,
 			Project:     ioc.Config().Get(provider.AppName).(*provider.Vertex).PROJECT_GEMINI_2_0_Flash,
-			Location:    vertex.Get_GEMINI2_LOCATION_STRING(vertex.GEMINI2_LOCATION(i)),
+			Location:    vertex.Get_GEMINI2_LOCATION_STRING(vertex.GEMINI_2_LOCATION(i)),
 			Credentials: creds1,
 
 			HTTPOptions: genai.HTTPOptions{APIVersion: "v1"},
@@ -67,7 +70,7 @@ func (g *Gemini2Flash) Init() error {
 			return err
 		}
 		// g.clientsv2 = client
-		g.gemini_clients[vertex.GEMINI2_LOCATION(i)] = client
+		g.gemini_clients[vertex.GEMINI_2_LOCATION(i)] = client
 	}
 	// if g.clientsv2 == nil { // 检查 g.clientsv2 是否为 nil
 	// 	return exception.NewNotFound(("Error: clientsv2 is nil"))
@@ -75,20 +78,19 @@ func (g *Gemini2Flash) Init() error {
 	return nil
 }
 
-func (g *Gemini2Flash) ModelIssue(ctx context.Context, se *vertex.GenaiSetting, part ...genai.Part) *genai.GenerateContentResponse {
+func (g *Gemini2Flash) NoStreamingGenerateContent(ctx context.Context, gemini2Config *vertex.Gemini2Config) (*genai.GenerateContentResponse, error) {
+	// fmt.Println("----", gemini2Config.Gemini_2_Regional)
+	gemini2Config.Gemini_2_Regional = vertex.GEMINI2_LOCATION_Global
+	clinet := g.gemini_clients[gemini2Config.Gemini_2_Regional]
+	// // fmt.Println(format.ToJSON(re))
+	// fmt.Println(format.ToJSON(err))
+	return clinet.Models.GenerateContent(ctx, gemini2Config.ModelName, gemini2Config.Contents, gemini2Config.GenerateContentConfig)
+}
 
-	clinet := g.gemini_clients[vertex.GEMINI2_LOCATION(7)]
-	re, err := clinet.Models.GenerateContent(ctx, "gemini-2.0-flash-001", []*genai.Content{
-		{
-			Parts: []*genai.Part{
-				{
-					Text: "k8s是什么",
-				},
-			},
-			Role: "user",
-		},
-	}, nil)
-	fmt.Println(format.ToJSON(re))
-	fmt.Println(format.ToJSON(err))
-	return nil
+func (g *Gemini2Flash) StreamingGenerateContent(ctx context.Context, gemini2Config *vertex.Gemini2Config) iter.Seq2[*genai.GenerateContentResponse, error] {
+	// fmt.Println("----", gemini2Config.Gemini_2_Regional)
+	gemini2Config.Gemini_2_Regional = vertex.GEMINI2_LOCATION_Global
+	clinet := g.gemini_clients[gemini2Config.Gemini_2_Regional]
+
+	return clinet.Models.GenerateContentStream(ctx, gemini2Config.ModelName, gemini2Config.Contents, gemini2Config.GenerateContentConfig)
 }

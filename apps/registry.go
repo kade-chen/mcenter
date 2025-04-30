@@ -13,6 +13,8 @@ import (
 	_ "github.com/kade-chen/mcenter/apps/vertex/v1/impl"
 	_ "github.com/kade-chen/mcenter/apps/vertex/v2/impl"
 
+	_ "github.com/kade-chen/mcenter/apps/vertex/impl"
+
 	//api
 	_ "github.com/kade-chen/mcenter/apps/policy/api"
 	_ "github.com/kade-chen/mcenter/apps/stt/v1/api"
@@ -22,6 +24,8 @@ import (
 	_ "github.com/kade-chen/mcenter/apps/user/api"
 	_ "github.com/kade-chen/mcenter/apps/vertex/v1/api"
 	_ "github.com/kade-chen/mcenter/apps/vertex/v2/api"
+
+	_ "github.com/kade-chen/mcenter/apps/vertex/api"
 
 	//注册所有provider
 	_ "github.com/kade-chen/mcenter/apps/token/provider/all"

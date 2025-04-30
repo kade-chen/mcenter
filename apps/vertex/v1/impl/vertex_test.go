@@ -268,5 +268,5 @@ func init() {
 	req.ConfigFile.Enabled = true
 	req.ConfigFile.Path = "../../../../etc/config.toml"
 	ioc.DevelopmentSetup(req)
-	impl = ioc.Controller().Get(vertex.AppName).(vertex.Service)
+	impl = ioc.Controller().Get(vertex.AppName3).(vertex.Service)
 }

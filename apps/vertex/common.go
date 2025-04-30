@@ -11,11 +11,12 @@ type GenaiSetting struct {
 	//Available for gemini-1.5-flash, gemini-1.5-pro, and gemini-1.0-pro-002.
 	SystemInstruction *Content
 	GenerationConfig  *GenerationConfig
-	Regional          LOCATION `json:"regional"`
-	ModelName         string   `json:"model_name"`
-	Text              string   `json:"text"`
-	Url               string   `json:"url"`
-	BinaryData        []byte   `json:"binary_data"`
+	Regional          LOCATION          `json:"regional"`
+	Gemini_2_Regional GEMINI_2_LOCATION `json:"gemini_2_regional"`
+	ModelName         string            `json:"model_name"`
+	Text              string            `json:"text"`
+	Url               string            `json:"url"`
+	BinaryData        []byte            `json:"binary_data"`
 }
 
 type GenerationConfig struct {

@@ -3,10 +3,10 @@ package domain
 import (
 	"time"
 
-	"github.com/kade-chen/library/tools/hash"
+	// "github.com/kade-chen/library/tools/hash"
+	"github.com/rs/xid"
 
 	"github.com/kade-chen/mcenter/apps/notify"
-	"github.com/rs/xid"
 )
 
 const (
@@ -23,8 +23,8 @@ func NewDomain(req *CreateDomainRequest) (*Domain, error) {
 		Meta: NewMeta(),
 		Spec: req,
 	}
-
-	d.Meta.Id = hash.FnvHash(req.Name)
+	d.Meta.Id = req.Name
+	// d.Meta.Id = hash.FnvHash(req.Name)
 	return d, nil
 }
 

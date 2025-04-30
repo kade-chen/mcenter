@@ -28,7 +28,7 @@ type geminiHandler struct {
 }
 
 func (g *geminiHandler) Name() string {
-	return vertex.AppName
+	return vertex.AppName3
 }
 
 func (g *geminiHandler) Version() string {
@@ -40,7 +40,7 @@ func (g *geminiHandler) Init() error {
 	g.log.Debug().Msgf("The gemini application log was successfully initialized")
 	// db := ioc_mongo.DB()
 	// u.role = db.Collection("roles")
-	g.gemini = ioc.Controller().Get(vertex.AppName).(vertex.Service)
+	g.gemini = ioc.Controller().Get(vertex.AppName3).(vertex.Service)
 	g.policy = ioc.Controller().Get(policy.AppName).(policy.Service)
 	// u.user_binding_roles = db.Collection("user_binding_roles")
 	g.Registry()

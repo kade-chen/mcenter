@@ -52,6 +52,7 @@
 
 24.[Package cloud.google.com/go/vertexai/genai/tokenizer](https://cloud.google.com/vertex-ai/generative-ai/docs/reference/go/latest/genai/tokenizer)
 
+25.[Vertex Auth Credentials](https://pkg.go.dev/cloud.google.com/go/auth/credentials)
 
 ```go
 Vertex AI服务 及 Google Cloud 提供相关数据安全与隐私保护说明和证明。

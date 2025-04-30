@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"iter"
 
 	"github.com/kade-chen/mcenter/apps/vertex"
 	"google.golang.org/genai"
@@ -19,14 +20,15 @@ type Issuer interface {
 }
 
 type ModelIssuer interface {
-	ModelIssue(context.Context, *vertex.GenaiSetting, ...genai.Part) *genai.GenerateContentResponse
+	NoStreamingGenerateContent(context.Context, *vertex.Gemini2Config) (*genai.GenerateContentResponse, error)
+	StreamingGenerateContent(context.Context, *vertex.Gemini2Config) iter.Seq2[*genai.GenerateContentResponse, error]
 }
 
 func Registe(i Issuer) {
 	m[i.GrantModel()] = i
 }
 
-func List() (cc []vertex.GRANT_MODEL, err error) {
+func ProviderRegistry() (cc []vertex.GRANT_MODEL, err error) {
 	for k, _ := range m {
 		cc = append(cc, k)
 	}
@@ -36,6 +38,15 @@ func List() (cc []vertex.GRANT_MODEL, err error) {
 	}
 
 	return cc, nil
+}
+
+func CheckProviderRegistry(a vertex.GRANT_MODEL, b []vertex.GRANT_MODEL) bool {
+	for _, v := range b {
+		if v == a {
+			return true
+		}
+	}
+	return false
 }
 
 func Init() error {

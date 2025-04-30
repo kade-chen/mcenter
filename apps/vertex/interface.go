@@ -11,6 +11,7 @@ import (
 const (
 	AppName  = "vertex"
 	AppName2 = "gemini2"
+	AppName3 = "vertexplatform"
 )
 
 type Service interface {
@@ -21,5 +22,11 @@ type Service interface {
 type ServiceGemini2 interface {
 	NoStreamingGenerateContent(context.Context, *Gemini2Config) (*gemini2.GenerateContentResponse, error)
 	StreamingGenerateContent(context.Context, *Gemini2Config) iter.Seq2[*gemini2.GenerateContentResponse, error]
+	// GenerateContent(context.Context, string, []*gemini2.Content, *gemini2.GenerateContentConfig) (*gemini2.GenerateContentResponse, error)
+}
+
+type ServiceGemini3 interface {
+	NoStreamingGenerateContent(context.Context, *Gemini2Config) (*gemini2.GenerateContentResponse, error)
+	StreamingGenerateContent(context.Context, *Gemini2Config) (iter.Seq2[*gemini2.GenerateContentResponse, error], error)
 	// GenerateContent(context.Context, string, []*gemini2.Content, *gemini2.GenerateContentConfig) (*gemini2.GenerateContentResponse, error)
 }

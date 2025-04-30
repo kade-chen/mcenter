@@ -5,15 +5,16 @@ import (
 	"iter"
 
 	"github.com/rs/zerolog"
-	gemini2 "google.golang.org/genai"
+	"google.golang.org/genai"
 
+	"github.com/kade-chen/library/exception"
 	"github.com/kade-chen/library/ioc"
 	"github.com/kade-chen/library/ioc/config/log"
 	"github.com/kade-chen/mcenter/apps/vertex"
 	"github.com/kade-chen/mcenter/apps/vertex/provider"
 )
 
-var _ vertex.ServiceGemini2 = (*service)(nil)
+var _ vertex.ServiceGemini3 = (*service)(nil)
 
 func init() {
 	ioc.Controller().Registry(&service{})
@@ -70,15 +71,45 @@ func (s *service) Init() error {
 }
 
 func (service) Name() string {
-	return vertex.AppName2
+	return vertex.AppName
 }
 
-func (service) NoStreamingGenerateContent(context.Context, *vertex.Gemini2Config) (*gemini2.GenerateContentResponse, error) {
-	impl := provider.GetModelIssuer(vertex.GRANT_MODEL_GEMINI_2_0_Flash)
-	impl.ModelIssue(context.Background(), nil)
-	return nil, nil
+func (service) NoStreamingGenerateContent(ctx context.Context, gemini2setting *vertex.Gemini2Config) (*genai.GenerateContentResponse, error) {
+	if gemini2setting == nil {
+		gemini2setting = vertex.NewDefaultsGemini2Config()
+	}
+	// gemini2setting.ModelName = "gemini-1.0-pro"
+	a, exists := vertex.GRANT_MODEL_value[gemini2setting.ModelName]
+	if !exists {
+		return nil, exception.NewBadRequest("Model Name: %s , And cannot be empty or no in the registry", gemini2setting.ModelName)
+	}
+
+	pr, _ := provider.ProviderRegistry()
+	if l := provider.CheckProviderRegistry(a, pr); !l {
+		return nil, exception.NewNotFound("Model Name: %s does not exist", gemini2setting.ModelName)
+	}
+
+	// impl, err := provider.GetModelIssuer(vertex.GRANT_MODEL_GEMINI_2_0_Flash)
+	// impl.NoStreamingGenerateContent(context.Background(), gemini2setting)
+
+	return provider.GetModelIssuer(a).NoStreamingGenerateContent(context.Background(), gemini2setting)
 }
 
-func (service) StreamingGenerateContent(context.Context, *vertex.Gemini2Config) iter.Seq2[*gemini2.GenerateContentResponse, error] {
-	return nil
+func (service) StreamingGenerateContent(ctx context.Context, gemini2setting *vertex.Gemini2Config) (iter.Seq2[*genai.GenerateContentResponse, error], error) {
+
+	if gemini2setting == nil {
+		gemini2setting = vertex.NewDefaultsGemini2Config()
+	}
+	// gemini2setting.ModelName = "gemini-1.0-pro"
+	a, exists := vertex.GRANT_MODEL_value[gemini2setting.ModelName]
+	if !exists {
+		return nil, exception.NewBadRequest("Model Name: %s , And cannot be empty or no in the registry", gemini2setting.ModelName)
+	}
+
+	pr, _ := provider.ProviderRegistry()
+	if l := provider.CheckProviderRegistry(a, pr); !l {
+		return nil, exception.NewNotFound("Model Name: %s does not exist", gemini2setting.ModelName)
+	}
+
+	return provider.GetModelIssuer(a).StreamingGenerateContent(context.Background(), gemini2setting), nil
 }

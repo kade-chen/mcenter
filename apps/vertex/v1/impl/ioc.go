@@ -30,12 +30,12 @@ type gemini struct {
 }
 
 func (g *gemini) Name() string {
-	return vertex.AppName
+	return vertex.AppName3
 }
 
 func (g *gemini) Init() error {
 
-	g.log = logs.Sub(vertex.AppName)
+	g.log = logs.Sub(vertex.AppName3)
 
 	// t.log.Info().Msg("speech to text v1 client initializing...")
 

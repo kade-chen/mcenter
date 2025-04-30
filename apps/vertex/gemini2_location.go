@@ -1,12 +1,12 @@
 package vertex
 
-type GEMINI2_LOCATION uint8
+type GEMINI_2_LOCATION uint8
 
 // https://cloud.google.com/vertex-ai/generative-ai/docs/learn/locations#middle-east
 const (
 	//United States
 	//Columbus, Ohio 俄亥俄州-哥伦布市
-	GEMINI2_LOCATION_US_East5 GEMINI2_LOCATION = iota
+	GEMINI2_LOCATION_US_East5 GEMINI_2_LOCATION = iota
 	//Dallas, Texas 德克萨斯州-达拉斯
 	GEMINI2_LOCATION_US_South1
 	//Iowa  爱荷华州
@@ -78,7 +78,7 @@ const (
 )
 
 // 创建双向映射
-var GET_GEMINI2_LOCATION = map[GEMINI2_LOCATION]string{
+var GET_GEMINI2_LOCATION = map[GEMINI_2_LOCATION]string{
 	// United States
 	//Columbus, Ohio 俄亥俄州-哥伦布市
 	GEMINI2_LOCATION_US_East5: "us-east5",
@@ -152,7 +152,7 @@ var GET_GEMINI2_LOCATION = map[GEMINI2_LOCATION]string{
 	GEMINI2_LOCATION_Global: "global",
 }
 
-var GET_GEMINI2_LOCATION_STRING = map[string]GEMINI2_LOCATION{
+var GET_GEMINI2_LOCATION_STRING = map[string]GEMINI_2_LOCATION{
 	// United States
 	//Columbus, Ohio 俄亥俄州-哥伦布市
 	"us-east5": GEMINI2_LOCATION_US_East5,
@@ -227,12 +227,12 @@ var GET_GEMINI2_LOCATION_STRING = map[string]GEMINI2_LOCATION{
 }
 
 // 获取 GEMINI2_LOCATION 对应的字符串
-func Get_GEMINI2_LOCATION_STRING(GEMINI2_LOCATION GEMINI2_LOCATION) string {
+func Get_GEMINI2_LOCATION_STRING(GEMINI2_LOCATION GEMINI_2_LOCATION) string {
 	return GET_GEMINI2_LOCATION[GEMINI2_LOCATION]
 }
 
 // 获取字符串对应的 GEMINI2_LOCATION
-func Get_GEMINI2_LOCATION(GEMINI2_LOCATIONStr string) (GEMINI2_LOCATION, bool) {
+func Get_GEMINI2_LOCATION(GEMINI2_LOCATIONStr string) (GEMINI_2_LOCATION, bool) {
 	GEMINI2_LOCATION, exists := GET_GEMINI2_LOCATION_STRING[GEMINI2_LOCATIONStr]
 	return GEMINI2_LOCATION, exists
 }

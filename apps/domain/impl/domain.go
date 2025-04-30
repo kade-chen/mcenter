@@ -13,7 +13,7 @@ func (s *service) CreateDomain(ctx context.Context, req *domain.CreateDomainRequ
 	d, err := domain.NewDomain(req)
 
 	if err != nil {
-		return nil, exception.NewBadRequest(err.Error())
+		return nil, exception.NewBadRequest("%s", err.Error())
 	}
 	if _, err := s.col.InsertOne(ctx, d); err != nil {
 		return nil, exception.NewInternalServerError("inserted a domain document error, %s", err)
@@ -25,7 +25,7 @@ func (s *service) CreateDomain(ctx context.Context, req *domain.CreateDomainRequ
 func (s *service) DescribeDomain(ctx context.Context, req *domain.DescribeDomainRequest) (*domain.Domain, error) {
 
 	if err := req.Validate(); err != nil {
-		return nil, exception.NewBadRequest(err.Error())
+		return nil, exception.NewBadRequest("%s", err.Error())
 	}
 
 	filter := bson.M{}
