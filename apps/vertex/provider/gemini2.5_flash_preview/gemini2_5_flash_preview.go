@@ -1,4 +1,4 @@
-package gemini2flash
+package gemini25flashpreview
 
 import (
 	"context"
@@ -11,9 +11,9 @@ import (
 	"github.com/kade-chen/mcenter/apps/vertex"
 )
 
-func (g *Gemini2Flash) NoStreamingGenerateContent(ctx context.Context, gemini2Config *vertex.Gemini_Config) (*genai.GenerateContentResponse, error) {
+func (g *Gemini_25_flash_preview) NoStreamingGenerateContent(ctx context.Context, gemini2Config *vertex.Gemini_Config) (*genai.GenerateContentResponse, error) {
 	// fmt.Println("----Location", gemini2Config.Location)
-	a, exists := vertex.GET_GEMINI2_LOCATION_STRING[gemini2Config.Location]
+	a, exists := vertex.Gemini_25_FLASH_PREVIEW_String_To_LOCATION[gemini2Config.Location]
 	if !exists {
 		return nil, exception.NewBadRequest("Model Name: %s && Location: %s , And cannot be empty or no in the registry", gemini2Config.ModelName, gemini2Config.Location)
 	}
@@ -22,8 +22,8 @@ func (g *Gemini2Flash) NoStreamingGenerateContent(ctx context.Context, gemini2Co
 	return g.gemini_clients[a].Models.GenerateContent(ctx, gemini2Config.ModelName, gemini2Config.Contents, gemini2Config.GenerateContentConfig)
 }
 
-func (g *Gemini2Flash) StreamingGenerateContent(ctx context.Context, gemini2Config *vertex.Gemini_Config) iter.Seq2[*genai.GenerateContentResponse, error] {
-	a, exists := vertex.GET_GEMINI2_LOCATION_STRING[gemini2Config.Location]
+func (g *Gemini_25_flash_preview) StreamingGenerateContent(ctx context.Context, gemini2Config *vertex.Gemini_Config) iter.Seq2[*genai.GenerateContentResponse, error] {
+	a, exists := vertex.Gemini_25_FLASH_PREVIEW_String_To_LOCATION[gemini2Config.Location]
 	if !exists {
 		return (func(yield func(*genai.GenerateContentResponse, error) bool) {
 			yield(nil, exception.NewBadRequest("Model Name: %s && Location: %s , And cannot be empty or no in the registry", gemini2Config.ModelName, gemini2Config.Location))

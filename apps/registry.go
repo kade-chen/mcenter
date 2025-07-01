@@ -10,8 +10,6 @@ import (
 	_ "github.com/kade-chen/mcenter/apps/token/impl"
 	_ "github.com/kade-chen/mcenter/apps/tts/v1/impl"
 	_ "github.com/kade-chen/mcenter/apps/user/impl"
-	_ "github.com/kade-chen/mcenter/apps/vertex/v1/impl"
-	_ "github.com/kade-chen/mcenter/apps/vertex/v2/impl"
 
 	_ "github.com/kade-chen/mcenter/apps/vertex/impl"
 
@@ -22,8 +20,6 @@ import (
 	_ "github.com/kade-chen/mcenter/apps/token/api"
 	_ "github.com/kade-chen/mcenter/apps/tts/v1/api"
 	_ "github.com/kade-chen/mcenter/apps/user/api"
-	_ "github.com/kade-chen/mcenter/apps/vertex/v1/api"
-	_ "github.com/kade-chen/mcenter/apps/vertex/v2/api"
 
 	_ "github.com/kade-chen/mcenter/apps/vertex/api"
 

@@ -14,7 +14,7 @@ import (
 	"github.com/kade-chen/mcenter/apps/vertex/provider"
 )
 
-var _ vertex.ServiceGemini3 = (*service)(nil)
+var _ vertex.Service = (*service)(nil)
 
 func init() {
 	ioc.Controller().Registry(&service{})
@@ -74,7 +74,7 @@ func (service) Name() string {
 	return vertex.AppName
 }
 
-func (service) NoStreamingGenerateContent(ctx context.Context, gemini2setting *vertex.Gemini2Config) (*genai.GenerateContentResponse, error) {
+func (service) NoStreamingGenerateContent(ctx context.Context, gemini2setting *vertex.Gemini_Config) (*genai.GenerateContentResponse, error) {
 	if gemini2setting == nil {
 		gemini2setting = vertex.NewDefaultsGemini2Config()
 	}
@@ -83,7 +83,6 @@ func (service) NoStreamingGenerateContent(ctx context.Context, gemini2setting *v
 	if !exists {
 		return nil, exception.NewBadRequest("Model Name: %s , And cannot be empty or no in the registry", gemini2setting.ModelName)
 	}
-
 	pr, _ := provider.ProviderRegistry()
 	if l := provider.CheckProviderRegistry(a, pr); !l {
 		return nil, exception.NewNotFound("Model Name: %s does not exist", gemini2setting.ModelName)
@@ -95,7 +94,7 @@ func (service) NoStreamingGenerateContent(ctx context.Context, gemini2setting *v
 	return provider.GetModelIssuer(a).NoStreamingGenerateContent(context.Background(), gemini2setting)
 }
 
-func (service) StreamingGenerateContent(ctx context.Context, gemini2setting *vertex.Gemini2Config) (iter.Seq2[*genai.GenerateContentResponse, error], error) {
+func (service) StreamingGenerateContent(ctx context.Context, gemini2setting *vertex.Gemini_Config) (iter.Seq2[*genai.GenerateContentResponse, error], error) {
 
 	if gemini2setting == nil {
 		gemini2setting = vertex.NewDefaultsGemini2Config()
@@ -110,6 +109,5 @@ func (service) StreamingGenerateContent(ctx context.Context, gemini2setting *ver
 	if l := provider.CheckProviderRegistry(a, pr); !l {
 		return nil, exception.NewNotFound("Model Name: %s does not exist", gemini2setting.ModelName)
 	}
-
 	return provider.GetModelIssuer(a).StreamingGenerateContent(context.Background(), gemini2setting), nil
 }

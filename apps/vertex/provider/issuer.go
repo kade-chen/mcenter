@@ -20,8 +20,8 @@ type Issuer interface {
 }
 
 type ModelIssuer interface {
-	NoStreamingGenerateContent(context.Context, *vertex.Gemini2Config) (*genai.GenerateContentResponse, error)
-	StreamingGenerateContent(context.Context, *vertex.Gemini2Config) iter.Seq2[*genai.GenerateContentResponse, error]
+	NoStreamingGenerateContent(context.Context, *vertex.Gemini_Config) (*genai.GenerateContentResponse, error)
+	StreamingGenerateContent(context.Context, *vertex.Gemini_Config) iter.Seq2[*genai.GenerateContentResponse, error]
 }
 
 func Registe(i Issuer) {

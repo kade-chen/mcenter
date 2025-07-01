@@ -13,7 +13,7 @@ var (
 )
 
 func Test_User(t *testing.T) {
-	roles, err := impl.UserBindingRole(ctx, &roles.CreateUserBindingRoleRequest{UsernameId: "admin", RoleId: "Owner"})
+	roles, err := impl.UserBindingRole(ctx, &roles.CreateUserBindingRoleRequest{UsernameId: "kade", RoleId: "Owner"})
 	if err != nil {
 		t.Fatal(err)
 	} else {

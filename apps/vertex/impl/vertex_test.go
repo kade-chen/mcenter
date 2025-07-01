@@ -18,7 +18,7 @@ import (
 
 var (
 	ctx  = context.Background()
-	impl vertex.ServiceGemini3
+	impl vertex.Service
 )
 
 func Test_Issue_Toke(t *testing.T) {
@@ -47,5 +47,5 @@ func init() {
 	req.ConfigFile.Enabled = true
 	req.ConfigFile.Path = "/Users/kade.chen/go-kade-project/github/mcenter/etc/config.toml"
 	ioc.DevelopmentSetup(req)
-	impl = ioc.Controller().Get(vertex.AppName).(vertex.ServiceGemini3)
+	impl = ioc.Controller().Get(vertex.AppName).(vertex.Service)
 }

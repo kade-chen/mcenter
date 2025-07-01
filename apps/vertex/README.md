@@ -142,3 +142,59 @@ https://cloud.google.com/docs/security/incident-response?hl=zh-cn#data_incident_
 ![presence/frequency](presenceFrequency.png)
 
 ![image](muilModel.png)
+
+
+## EXAMPLES
+```rust
+curl -X GET "http://localhost:8010/mcenter/api/v1/vertex/streaming" \
+  -H "Content-Type: application/json" \
+  -H "Cookie: ACCESS_TOKEN_COOKIE_KEY=xxxxxxxxx" \
+  -d '{
+    "Contents": [
+        {
+            "parts": [
+                {
+                    "text": "k8s是什么.2000个字概括"
+                }
+            ],
+            "role": "user"
+        }
+    ],
+    "GenerateContentConfig": {
+        "candidateCount": 1,
+        "frequencyPenalty": 0.0,
+        "maxOutputTokens": 8192,
+        "presencePenalty": 0.0,
+        "responseLogprobs": false,
+        "responseMimeType": "text/plain",
+        "responseModalities": [
+            "TEXT"
+        ],
+        "seed": -2147483648,
+        "stopSequences": [
+            "shabi"
+        ],
+        "systemInstruction": {
+            "parts": [
+                {
+                    "text": "string"
+                }
+            ],
+            "role": "string"
+        },
+        "safetySettings": [
+            {
+                "category": "3",
+                "method": "0",
+                "threshold": "5"
+            }
+        ],
+        "temperature": 0,
+        "topK": 1,
+        "topP": 1
+    },
+    "model_name": "gemini-2.0-flash-001",
+    "gemini_2_regional": 14
+  }' \
+  -N
+```
